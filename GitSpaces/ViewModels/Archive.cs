@@ -22,7 +22,7 @@ public class Archive : Popup
         _revision = branch.Head;
         _saveFile = $"archive-{Path.GetFileNameWithoutExtension(branch.Name)}.zip";
         BasedOn = branch;
-        View = new Views.Archive
+        View = new OldViews.Archive
         {
             DataContext = this
         };
@@ -34,7 +34,7 @@ public class Archive : Popup
         _revision = commit.SHA;
         _saveFile = $"archive-{commit.SHA.Substring(0, 10)}.zip";
         BasedOn = commit;
-        View = new Views.Archive
+        View = new OldViews.Archive
         {
             DataContext = this
         };
@@ -46,7 +46,7 @@ public class Archive : Popup
         _revision = tag.SHA;
         _saveFile = $"archive-{tag.Name}.zip";
         BasedOn = tag;
-        View = new Views.Archive
+        View = new OldViews.Archive
         {
             DataContext = this
         };

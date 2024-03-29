@@ -10,7 +10,7 @@ public class Checkout : Popup
     {
         _repo = repo;
         Branch = branch;
-        View = new Views.Checkout
+        View = new OldViews.Checkout
         {
             DataContext = this
         };

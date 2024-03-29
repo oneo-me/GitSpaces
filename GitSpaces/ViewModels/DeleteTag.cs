@@ -14,7 +14,7 @@ public class DeleteTag : Popup
         _repo = repo;
         Target = tag;
         ShouldPushToRemote = true;
-        View = new Views.DeleteTag
+        View = new OldViews.DeleteTag
         {
             DataContext = this
         };

@@ -11,7 +11,7 @@ public class DropStash : Popup
     {
         _repo = repo;
         Stash = stash;
-        View = new Views.DropStash
+        View = new OldViews.DropStash
         {
             DataContext = this
         };

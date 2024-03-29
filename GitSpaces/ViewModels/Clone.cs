@@ -55,7 +55,7 @@ public class Clone : Popup
         _launcher = launcher;
         _page = page;
 
-        View = new Views.Clone
+        View = new OldViews.Clone
         {
             DataContext = this
         };

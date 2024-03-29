@@ -1,0 +1,57 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:m="using:GitSpaces.Models"
+             xmlns:vm="using:GitSpaces.ViewModels"
+             xmlns:oldViews="clr-namespace:GitSpaces.OldViews"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="GitSpaces.OldViews.TextDiffView"
+             Background="{DynamicResource Brush.Contents}">
+    <UserControl.DataTemplates>
+        <DataTemplate DataType="m:TextDiff">
+            <oldViews:CombinedTextDiffPresenter HorizontalScrollBarVisibility="Auto"
+                                         VerticalScrollBarVisibility="Auto"
+                                         BorderBrush="{DynamicResource Brush.Border2}"
+                                         BorderThickness="0"
+                                         Foreground="{DynamicResource Brush.FG1}"
+                                         SecondaryFG="{DynamicResource Brush.FG2}"
+                                         FontFamily="{Binding Source={x:Static vm:Preference.Instance}, Path=MonospaceFont}"
+                                         DiffData="{Binding}"
+                                         SyncScrollOffset="{Binding $parent[oldViews:DiffView].DataContext.(vm:DiffContext).SyncScrollOffset, Mode=TwoWay}"
+                                         UseSyntaxHighlighting="{Binding Source={x:Static vm:Preference.Instance}, Path=UseSyntaxHighlighting, Mode=TwoWay}" />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:TwoSideTextDiff">
+            <Grid ColumnDefinitions="*,1,*">
+                <oldViews:SingleSideTextDiffPresenter Grid.Column="0"
+                                               SyncScrollOffset="{Binding $parent[oldViews:DiffView].DataContext.(vm:DiffContext).SyncScrollOffset, Mode=TwoWay}"
+                                               UseSyntaxHighlighting="{Binding Source={x:Static vm:Preference.Instance}, Path=UseSyntaxHighlighting, Mode=TwoWay}"
+                                               IsOld="True"
+                                               HorizontalScrollBarVisibility="Auto"
+                                               VerticalScrollBarVisibility="Auto"
+                                               BorderBrush="{DynamicResource Brush.Border2}"
+                                               BorderThickness="0"
+                                               Foreground="{DynamicResource Brush.FG1}"
+                                               SecondaryFG="{DynamicResource Brush.FG2}"
+                                               FontFamily="{Binding Source={x:Static vm:Preference.Instance}, Path=MonospaceFont}"
+                                               DiffData="{Binding}" />
+
+                <Rectangle Grid.Column="1" Fill="{DynamicResource Brush.Border2}" Width="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+
+                <oldViews:SingleSideTextDiffPresenter Grid.Column="2"
+                                               SyncScrollOffset="{Binding $parent[oldViews:DiffView].DataContext.(vm:DiffContext).SyncScrollOffset, Mode=TwoWay}"
+                                               UseSyntaxHighlighting="{Binding Source={x:Static vm:Preference.Instance}, Path=UseSyntaxHighlighting, Mode=TwoWay}"
+                                               IsOld="False"
+                                               HorizontalScrollBarVisibility="Auto"
+                                               VerticalScrollBarVisibility="Auto"
+                                               BorderBrush="{DynamicResource Brush.Border2}"
+                                               BorderThickness="0"
+                                               Foreground="{DynamicResource Brush.FG1}"
+                                               SecondaryFG="{DynamicResource Brush.FG2}"
+                                               FontFamily="{Binding Source={x:Static vm:Preference.Instance}, Path=MonospaceFont}"
+                                               DiffData="{Binding}" />
+            </Grid>
+        </DataTemplate>
+    </UserControl.DataTemplates>
+</UserControl>

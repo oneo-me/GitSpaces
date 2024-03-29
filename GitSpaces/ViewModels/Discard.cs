@@ -27,7 +27,7 @@ public class Discard : Popup
         _repo = repo;
 
         Mode = new DiscardModeAll();
-        View = new Views.Discard
+        View = new OldViews.Discard
         {
             DataContext = this
         };
@@ -58,7 +58,7 @@ public class Discard : Popup
             };
         }
 
-        View = new Views.Discard
+        View = new OldViews.Discard
         {
             DataContext = this
         };

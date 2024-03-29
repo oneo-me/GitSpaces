@@ -1,8 +1,9 @@
-<Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="GitSpaces.App"
-             Name="SourceGit"
-             RequestedThemeVariant="Dark">
+<Application
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="GitSpaces.App"
+    Name="SourceGit"
+    RequestedThemeVariant="Dark">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -11,11 +12,14 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
-
     <Application.Styles>
         <FluentTheme />
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
         <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
         <StyleInclude Source="/Resources/Styles.axaml" />
+        <!-- OpenUI -->
+        <StyleInclude Source="avares://OpenUI/Themes/Controls.axaml" />
+        <BaseTheme />
+        <StyleInclude Source="Styles.axaml" />
     </Application.Styles>
 </Application>

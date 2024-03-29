@@ -48,7 +48,7 @@ public class EditRemote : Popup
             SSHKey = new Config(repo.FullPath).Get($"remote.{remote.Name}.sshkey");
         }
 
-        View = new Views.EditRemote
+        View = new OldViews.EditRemote
         {
             DataContext = this
         };

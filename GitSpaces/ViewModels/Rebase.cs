@@ -18,7 +18,7 @@ public class Rebase : Popup
         Current = current;
         On = on;
         AutoStash = true;
-        View = new Views.Rebase
+        View = new OldViews.Rebase
         {
             DataContext = this
         };
@@ -31,7 +31,7 @@ public class Rebase : Popup
         Current = current;
         On = on;
         AutoStash = true;
-        View = new Views.Rebase
+        View = new OldViews.Rebase
         {
             DataContext = this
         };

@@ -20,7 +20,7 @@ public class Reword : Popup
         _repo = repo;
         Head = head;
         Message = head.FullMessage;
-        View = new Views.Reword
+        View = new OldViews.Reword
         {
             DataContext = this
         };

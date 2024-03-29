@@ -198,7 +198,7 @@ public class CommitDetail : ObservableObject
             history.Icon = App.CreateMenuIcon("Icons.Histories");
             history.Click += (_, ev) =>
             {
-                var window = new Views.FileHistories
+                var window = new OldViews.FileHistories
                 {
                     DataContext = new FileHistories(_repo, change.Path)
                 };
@@ -211,7 +211,7 @@ public class CommitDetail : ObservableObject
             blame.Icon = App.CreateMenuIcon("Icons.Blame");
             blame.Click += (o, ev) =>
             {
-                var window = new Views.Blame
+                var window = new OldViews.Blame
                 {
                     DataContext = new Blame(_repo, change.Path, _commit.SHA)
                 };
@@ -255,7 +255,7 @@ public class CommitDetail : ObservableObject
         history.Icon = App.CreateMenuIcon("Icons.Histories");
         history.Click += (_, ev) =>
         {
-            var window = new Views.FileHistories
+            var window = new OldViews.FileHistories
             {
                 DataContext = new FileHistories(_repo, file.Path)
             };
@@ -268,7 +268,7 @@ public class CommitDetail : ObservableObject
         blame.Icon = App.CreateMenuIcon("Icons.Blame");
         blame.Click += (o, ev) =>
         {
-            var window = new Views.Blame
+            var window = new OldViews.Blame
             {
                 DataContext = new Blame(_repo, file.Path, _commit.SHA)
             };

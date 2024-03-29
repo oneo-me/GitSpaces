@@ -8,7 +8,7 @@ public class ClearStashes : Popup
     public ClearStashes(Repository repo)
     {
         _repo = repo;
-        View = new Views.ClearStashes
+        View = new OldViews.ClearStashes
         {
             DataContext = this
         };

@@ -14,7 +14,7 @@ public class Init : Popup
     public Init(string path)
     {
         TargetPath = path;
-        View = new Views.Init
+        View = new OldViews.Init
         {
             DataContext = this
         };

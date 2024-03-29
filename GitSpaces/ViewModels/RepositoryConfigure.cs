@@ -27,7 +27,7 @@ public class RepositoryConfigure : Popup
         if (_cached.ContainsKey("user.signingkey")) GPGUserSigningKey = _cached["user.signingkey"];
         if (_cached.ContainsKey("http.proxy")) HttpProxy = _cached["http.proxy"];
 
-        View = new Views.RepositoryConfigure
+        View = new OldViews.RepositoryConfigure
         {
             DataContext = this
         };

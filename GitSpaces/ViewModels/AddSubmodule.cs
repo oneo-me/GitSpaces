@@ -29,7 +29,7 @@ public class AddSubmodule : Popup
     public AddSubmodule(Repository repo)
     {
         _repo = repo;
-        View = new Views.AddSubmodule
+        View = new OldViews.AddSubmodule
         {
             DataContext = this
         };

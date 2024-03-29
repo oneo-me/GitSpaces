@@ -9,7 +9,7 @@ public class Cleanup : Popup
     public Cleanup(Repository repo)
     {
         _repo = repo;
-        View = new Views.Cleanup
+        View = new OldViews.Cleanup
         {
             DataContext = this
         };

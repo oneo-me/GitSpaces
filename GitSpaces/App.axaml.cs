@@ -1,79 +1,25 @@
-using System;
 using System.Collections;
 using System.Globalization;
-using System.IO;
-using System.Net.Http;
-using System.Reflection;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
-using Avalonia.Media.Fonts;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using GitSpaces.Models;
-using GitSpaces.Native;
 using GitSpaces.Resources;
-using GitSpaces.ViewModels;
-using Launcher = GitSpaces.Views.Launcher;
+using OpenUI;
+using OpenUI.Reactive;
+using Launcher = GitSpaces.OldViews.Launcher;
 using Path = Avalonia.Controls.Shapes.Path;
-using SelfUpdate = GitSpaces.Views.SelfUpdate;
+using SelfUpdate = GitSpaces.OldViews.SelfUpdate;
 
 namespace GitSpaces;
 
-public class App : Application
+public class App : AppBase
 {
-    [STAThread]
-    public static void Main(string[] args)
-    {
-        try
-        {
-            BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
-        }
-        catch (Exception ex)
-        {
-            var builder = new StringBuilder();
-            builder.Append("Crash: ");
-            builder.Append(ex.Message);
-            builder.Append("\n\n");
-            builder.Append("----------------------------\n");
-            builder.Append($"Version: {Assembly.GetExecutingAssembly().GetName().Version}\n");
-            builder.Append($"OS: {Environment.OSVersion.ToString()}\n");
-            builder.Append($"Framework: {AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName}\n");
-            builder.Append($"Source: {ex.Source}\n");
-            builder.Append("---------------------------\n\n");
-            builder.Append(ex.StackTrace);
-
-            var time = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
-            var file = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "GitSpaces",
-                $"crash_{time}.log");
-            File.WriteAllText(file, builder.ToString());
-        }
-    }
-
-    public static AppBuilder BuildAvaloniaApp()
-    {
-        var builder = AppBuilder.Configure<App>();
-        builder.UsePlatformDetect();
-        builder.LogToTrace();
-        builder.ConfigureFonts(manager =>
-        {
-            var monospace = new EmbeddedFontCollection(
-                new("fonts:GitSpaces", UriKind.Absolute),
-                new("avares://GitSpaces/Resources/Fonts", UriKind.Absolute));
-            manager.AddFontCollection(monospace);
-        });
-
-        OS.SetupApp(builder);
-        return builder;
-    }
-
     public static void RaiseException(string context, string message)
     {
         if (Current is App app && app._notificationReceiver != null)
@@ -205,7 +151,7 @@ public class App : Application
                 // Should not check ignored tag if this is called manually.
                 if (!manually)
                 {
-                    var pref = Preference.Instance;
+                    var pref = ViewModels.Preference.Instance;
                     if (ver.TagName == pref.IgnoreUpdateTag) return;
                 }
 
@@ -231,10 +177,15 @@ public class App : Application
     {
         AvaloniaXamlLoader.Load(this);
 
-        var pref = Preference.Instance;
+        var pref = ViewModels.Preference.Instance;
 
         SetLocale(pref.Locale);
         SetTheme(pref.Theme);
+    }
+
+    protected override WindowModel CreateMain()
+    {
+        return null!;
     }
 
     public override void OnFrameworkInitializationCompleted()
@@ -247,7 +198,7 @@ public class App : Application
             _notificationReceiver = launcher;
             desktop.MainWindow = launcher;
 
-            if (Preference.Instance.Check4UpdatesOnStartup) Check4Update();
+            if (ViewModels.Preference.Instance.Check4UpdatesOnStartup) Check4Update();
         }
 
         base.OnFrameworkInitializationCompleted();

@@ -11,7 +11,7 @@ public class DeleteBranch : Popup
     {
         _repo = repo;
         Target = branch;
-        View = new Views.DeleteBranch
+        View = new OldViews.DeleteBranch
         {
             DataContext = this
         };

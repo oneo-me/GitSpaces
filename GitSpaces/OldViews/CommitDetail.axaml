@@ -1,0 +1,74 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:GitSpaces.ViewModels"
+             xmlns:oldViews="clr-namespace:GitSpaces.OldViews"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="GitSpaces.OldViews.CommitDetail"
+             x:DataType="vm:CommitDetail"
+             Background="{DynamicResource Brush.Window}">
+    <TabControl SelectedIndex="{Binding ActivePageIndex, Mode=TwoWay}" Padding="4">
+        <!-- Information Page -->
+        <TabItem>
+            <TabItem.Header>
+                <TextBlock Classes="tab_header" Text="{DynamicResource Text.CommitDetail.Info}" />
+            </TabItem.Header>
+
+            <Grid RowDefinitions="Auto,*">
+                <!-- Base Information -->
+                <oldViews:CommitBaseInfo Grid.Row="0" Content="{Binding Commit}" />
+
+                <!-- Change List -->
+                <DataGrid Grid.Row="1"
+                          Background="Transparent"
+                          ItemsSource="{Binding Changes}"
+                          SelectionMode="Single"
+                          CanUserReorderColumns="False"
+                          CanUserResizeColumns="False"
+                          CanUserSortColumns="False"
+                          IsReadOnly="True"
+                          HeadersVisibility="None"
+                          Focusable="False"
+                          RowHeight="26"
+                          Margin="80,0,8,0"
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto"
+                          ContextRequested="OnChangeListContextRequested"
+                          DoubleTapped="OnChangeListDoubleTapped">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="ICON">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <oldViews:ChangeStatusIcon Width="14" Height="14" IsWorkingCopyChange="False" Change="{Binding}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Width="*" Header="PATH">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Classes="monospace" Text="{Binding Path}" Margin="8,0,0,0" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+
+        <TabItem>
+            <TabItem.Header>
+                <TextBlock Classes="tab_header" Text="{DynamicResource Text.CommitDetail.Changes}" />
+            </TabItem.Header>
+            <oldViews:CommitChanges />
+        </TabItem>
+
+        <TabItem>
+            <TabItem.Header>
+                <TextBlock Classes="tab_header" Text="{DynamicResource Text.CommitDetail.Files}" />
+            </TabItem.Header>
+            <oldViews:RevisionFiles />
+        </TabItem>
+    </TabControl>
+</UserControl>

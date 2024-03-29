@@ -11,7 +11,7 @@ public class PruneRemote : Popup
     {
         _repo = repo;
         Remote = remote;
-        View = new Views.PruneRemote
+        View = new OldViews.PruneRemote
         {
             DataContext = this
         };

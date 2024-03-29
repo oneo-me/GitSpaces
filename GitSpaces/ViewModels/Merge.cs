@@ -37,7 +37,7 @@ public class Merge : Popup
             new("Default", "Fast-forward if possible", ""), new("No Fast-forward", "Always create a merge commit", "--no-ff"), new("Squash", "Use '--squash'", "--squash"), new("Don't commit", "Merge without commit", "--no-commit")
         };
         SelectedMode = Modes[0];
-        View = new Views.Merge
+        View = new OldViews.Merge
         {
             DataContext = this
         };

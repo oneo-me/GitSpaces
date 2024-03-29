@@ -44,7 +44,7 @@ public class EditRepositoryNode : Popup
         _isRepository = node.IsRepository;
         _bookmark = node.Bookmark;
 
-        View = new Views.EditRepositoryNode
+        View = new OldViews.EditRepositoryNode
         {
             DataContext = this
         };

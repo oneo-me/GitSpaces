@@ -17,7 +17,7 @@ public class PushTag : Popup
         _repo = repo;
         Target = target;
         SelectedRemote = _repo.Remotes[0];
-        View = new Views.PushTag
+        View = new OldViews.PushTag
         {
             DataContext = this
         };

@@ -41,7 +41,7 @@ public class Reset : Popup
             new("Soft", "Keep all changes. Stage differences", "--soft", Brushes.Green), new("Mixed", "Keep all changes. Unstage differences", "--mixed", Brushes.Orange), new("Hard", "Discard all changes", "--hard", Brushes.Red)
         };
         SelectedMode = Modes[0];
-        View = new Views.Reset
+        View = new OldViews.Reset
         {
             DataContext = this
         };

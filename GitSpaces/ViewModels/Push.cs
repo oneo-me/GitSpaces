@@ -113,7 +113,7 @@ public class Push : Popup
         // Auto select preferred remote branch.
         AutoSelectBranchByRemote();
 
-        View = new Views.Push
+        View = new OldViews.Push
         {
             DataContext = this
         };

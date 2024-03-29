@@ -20,7 +20,7 @@ public class StashChanges : Popup
 
         CanIgnoreUntracked = canIgnoreUntracked;
         IncludeUntracked = true;
-        View = new Views.StashChanges
+        View = new OldViews.StashChanges
         {
             DataContext = this
         };

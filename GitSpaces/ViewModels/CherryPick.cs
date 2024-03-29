@@ -14,7 +14,7 @@ public class CherryPick : Popup
         _repo = repo;
         Target = target;
         AutoCommit = true;
-        View = new Views.CherryPick
+        View = new OldViews.CherryPick
         {
             DataContext = this
         };

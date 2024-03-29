@@ -98,7 +98,7 @@ public class Pull : Popup
             _selectedBranch = _remoteBranches[0];
         }
 
-        View = new Views.Pull
+        View = new OldViews.Pull
         {
             DataContext = this
         };

@@ -19,7 +19,7 @@ public class GitFlowFinish : Popup
         _repo = repo;
         Branch = branch;
         _type = type;
-        View = new Views.GitFlowFinish
+        View = new OldViews.GitFlowFinish
         {
             DataContext = this
         };

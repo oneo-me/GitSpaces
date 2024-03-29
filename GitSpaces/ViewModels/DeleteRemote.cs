@@ -11,7 +11,7 @@ public class DeleteRemote : Popup
     {
         _repo = repo;
         Remote = remote;
-        View = new Views.DeleteRemote
+        View = new OldViews.DeleteRemote
         {
             DataContext = this
         };

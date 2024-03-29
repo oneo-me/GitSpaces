@@ -11,7 +11,7 @@ public class DeleteSubmodule : Popup
     {
         _repo = repo;
         Submodule = submodule;
-        View = new Views.DeleteSubmodule
+        View = new OldViews.DeleteSubmodule
         {
             DataContext = this
         };

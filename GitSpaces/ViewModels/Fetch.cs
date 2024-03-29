@@ -24,7 +24,7 @@ public class Fetch : Popup
         _fetchAllRemotes = preferedRemote == null;
         SelectedRemote = preferedRemote != null ? preferedRemote : _repo.Remotes[0];
         Prune = true;
-        View = new Views.Fetch
+        View = new OldViews.Fetch
         {
             DataContext = this
         };

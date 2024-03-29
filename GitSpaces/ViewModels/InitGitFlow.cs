@@ -62,7 +62,7 @@ public partial class InitGitFlow : Popup
     public InitGitFlow(Repository repo)
     {
         _repo = repo;
-        View = new Views.InitGitFlow
+        View = new OldViews.InitGitFlow
         {
             DataContext = this
         };

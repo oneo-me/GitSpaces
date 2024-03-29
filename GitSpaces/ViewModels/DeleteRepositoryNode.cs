@@ -13,7 +13,7 @@ public class DeleteRepositoryNode : Popup
     public DeleteRepositoryNode(RepositoryNode node)
     {
         _node = node;
-        View = new Views.DeleteRepositoryNode
+        View = new OldViews.DeleteRepositoryNode
         {
             DataContext = this
         };

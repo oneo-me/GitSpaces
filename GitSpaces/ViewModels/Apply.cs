@@ -36,7 +36,7 @@ public class Apply : Popup
         };
         SelectedWhiteSpaceMode = WhiteSpaceModes[0];
 
-        View = new Views.Apply
+        View = new OldViews.Apply
         {
             DataContext = this
         };

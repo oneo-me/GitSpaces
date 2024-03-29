@@ -10,7 +10,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using GitSpaces.Commands;
 using GitSpaces.Models;
 using GitSpaces.Native;
-using GitSpaces.Views;
+using GitSpaces.OldViews;
 using Branch = GitSpaces.Models.Branch;
 using Commit = GitSpaces.Models.Commit;
 using GitFlow = GitSpaces.Models.GitFlow;

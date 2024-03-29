@@ -14,7 +14,7 @@ public class FastForwardWithoutCheckout : Popup
         _repo = repo;
         Local = local;
         To = upstream;
-        View = new Views.FastForwardWithoutCheckout
+        View = new OldViews.FastForwardWithoutCheckout
         {
             DataContext = this
         };

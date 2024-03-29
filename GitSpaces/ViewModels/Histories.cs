@@ -8,7 +8,7 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using GitSpaces.Commands;
 using GitSpaces.Models;
-using GitSpaces.Views;
+using GitSpaces.OldViews;
 using Branch = GitSpaces.Models.Branch;
 using Commit = GitSpaces.Models.Commit;
 using CommitGraph = GitSpaces.Models.CommitGraph;

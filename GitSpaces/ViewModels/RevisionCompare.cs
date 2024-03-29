@@ -153,7 +153,7 @@ public class RevisionCompare : ObservableObject
             history.Header = App.Text("FileHistory");
             history.Click += (_, ev) =>
             {
-                var window = new Views.FileHistories
+                var window = new OldViews.FileHistories
                 {
                     DataContext = new FileHistories(_repo, change.Path)
                 };

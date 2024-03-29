@@ -26,7 +26,7 @@ public class CreateTag : Popup
         _basedOn = branch.Head;
 
         BasedOn = branch;
-        View = new Views.CreateTag
+        View = new OldViews.CreateTag
         {
             DataContext = this
         };
@@ -38,7 +38,7 @@ public class CreateTag : Popup
         _basedOn = commit.SHA;
 
         BasedOn = commit;
-        View = new Views.CreateTag
+        View = new OldViews.CreateTag
         {
             DataContext = this
         };

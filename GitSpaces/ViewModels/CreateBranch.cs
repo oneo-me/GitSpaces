@@ -35,7 +35,7 @@ public class CreateBranch : Popup
         }
 
         BasedOn = branch;
-        View = new Views.CreateBranch
+        View = new OldViews.CreateBranch
         {
             DataContext = this
         };
@@ -47,7 +47,7 @@ public class CreateBranch : Popup
         _baseOnRevision = commit.SHA;
 
         BasedOn = commit;
-        View = new Views.CreateBranch
+        View = new OldViews.CreateBranch
         {
             DataContext = this
         };
@@ -59,7 +59,7 @@ public class CreateBranch : Popup
         _baseOnRevision = tag.SHA;
 
         BasedOn = tag;
-        View = new Views.CreateBranch
+        View = new OldViews.CreateBranch
         {
             DataContext = this
         };

@@ -23,7 +23,7 @@ public class Squash : Popup
         _message = parent.FullMessage;
         Head = head;
         Parent = parent;
-        View = new Views.Squash
+        View = new OldViews.Squash
         {
             DataContext = this
         };

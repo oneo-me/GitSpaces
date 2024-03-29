@@ -38,7 +38,7 @@ public class AddRemote : Popup
     public AddRemote(Repository repo)
     {
         _repo = repo;
-        View = new Views.AddRemote
+        View = new OldViews.AddRemote
         {
             DataContext = this
         };

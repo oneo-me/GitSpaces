@@ -16,7 +16,7 @@ public class CreateGroup : Popup
     public CreateGroup(RepositoryNode parent)
     {
         _parent = parent;
-        View = new Views.CreateGroup
+        View = new OldViews.CreateGroup
         {
             DataContext = this
         };

@@ -572,7 +572,7 @@ public class WorkingCopy : ObservableObject
             history.Icon = App.CreateMenuIcon("Icons.Histories");
             history.Click += (_, e) =>
             {
-                var window = new Views.FileHistories
+                var window = new OldViews.FileHistories
                 {
                     DataContext = new FileHistories(_repo.FullPath, change.Path)
                 };

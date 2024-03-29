@@ -14,7 +14,7 @@ public class Revert : Popup
         _repo = repo;
         Target = target;
         AutoCommit = true;
-        View = new Views.Revert
+        View = new OldViews.Revert
         {
             DataContext = this
         };

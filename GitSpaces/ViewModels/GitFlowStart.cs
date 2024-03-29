@@ -42,7 +42,7 @@ public class GitFlowStart : Popup
                 break;
         }
 
-        View = new Views.GitFlowStart
+        View = new OldViews.GitFlowStart
         {
             DataContext = this
         };

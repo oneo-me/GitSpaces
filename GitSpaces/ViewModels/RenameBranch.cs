@@ -22,7 +22,7 @@ public class RenameBranch : Popup
         _repo = repo;
         _name = target.Name;
         Target = target;
-        View = new Views.RenameBranch
+        View = new OldViews.RenameBranch
         {
             DataContext = this
         };
