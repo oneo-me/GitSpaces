@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Avalonia.Collections;
+﻿using Avalonia.Collections;
 using Avalonia.Threading;
 using GitSpaces.Commands;
 

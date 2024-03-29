@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GitSpaces.Commands;
+﻿namespace GitSpaces.Commands;
 
 public class GC : Command
 {

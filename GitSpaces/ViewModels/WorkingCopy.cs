@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
@@ -10,7 +6,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using GitSpaces.Commands;
 using GitSpaces.Configs;
 using GitSpaces.Models;
-using GitSpaces.Native;
+using GitSpaces.Services;
+using OpenUI.Services;
 using Commit = GitSpaces.Commands.Commit;
 
 namespace GitSpaces.ViewModels;
@@ -480,6 +477,7 @@ public class WorkingCopy : ObservableObject
 
     public ContextMenu CreateContextMenuForUnstagedChanges(List<Change> changes)
     {
+        var OS = Service.Get<ISystemService>();
         if (changes.Count == 0) return null;
 
         var menu = new ContextMenu();
@@ -495,16 +493,6 @@ public class WorkingCopy : ObservableObject
             explore.Click += (_, e) =>
             {
                 OS.OpenInFileManager(path, true);
-                e.Handled = true;
-            };
-
-            var openWith = new MenuItem();
-            openWith.Header = App123.Text("OpenWith");
-            openWith.Icon = App123.CreateMenuIcon("Icons.OpenWith");
-            openWith.IsEnabled = File.Exists(path);
-            openWith.Click += (_, e) =>
-            {
-                OS.OpenWithDefaultEditor(path);
                 e.Handled = true;
             };
 
@@ -601,7 +589,6 @@ public class WorkingCopy : ObservableObject
             };
 
             menu.Items.Add(explore);
-            menu.Items.Add(openWith);
             menu.Items.Add(new MenuItem
             {
                 Header = "-"
@@ -697,6 +684,8 @@ public class WorkingCopy : ObservableObject
     {
         if (changes.Count == 0) return null;
 
+        var OS = Service.Get<ISystemService>();
+        
         var menu = new ContextMenu();
         if (changes.Count == 1)
         {
@@ -710,16 +699,6 @@ public class WorkingCopy : ObservableObject
             explore.Click += (o, e) =>
             {
                 OS.OpenInFileManager(path, true);
-                e.Handled = true;
-            };
-
-            var openWith = new MenuItem();
-            openWith.Header = App123.Text("OpenWith");
-            openWith.Icon = App123.CreateMenuIcon("Icons.OpenWith");
-            openWith.IsEnabled = File.Exists(path);
-            openWith.Click += (_, e) =>
-            {
-                OS.OpenWithDefaultEditor(path);
                 e.Handled = true;
             };
 
@@ -793,7 +772,6 @@ public class WorkingCopy : ObservableObject
             };
 
             menu.Items.Add(explore);
-            menu.Items.Add(openWith);
             menu.Items.Add(new MenuItem
             {
                 Header = "-"

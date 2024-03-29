@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace GitSpaces.Commands;
+﻿namespace GitSpaces.Commands;
 
 public class Config : Command
 {

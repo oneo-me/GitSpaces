@@ -2,7 +2,8 @@ using System.Reflection;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using GitSpaces.Native;
+using GitSpaces.Services;
+using OpenUI.Services;
 
 namespace GitSpaces.OldViews;
 
@@ -30,18 +31,21 @@ public partial class About : Window
 
     void OnVisitAvaloniaUI(object sender, PointerPressedEventArgs e)
     {
+        var OS = Service.Get<ISystemService>();
         OS.OpenBrowser("https://www.avaloniaui.net/");
         e.Handled = true;
     }
 
     void OnVisitAvaloniaEdit(object sender, PointerPressedEventArgs e)
     {
+        var OS = Service.Get<ISystemService>();
         OS.OpenBrowser("https://github.com/AvaloniaUI/AvaloniaEdit");
         e.Handled = true;
     }
 
     void OnVisitJetBrainsMonoFont(object sender, PointerPressedEventArgs e)
     {
+        var OS = Service.Get<ISystemService>();
         OS.OpenBrowser("https://www.jetbrains.com/lp/mono/");
         e.Handled = true;
     }

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace GitSpaces.ViewModels;
+﻿namespace GitSpaces.ViewModels;
 
 public class MergeMode
 {

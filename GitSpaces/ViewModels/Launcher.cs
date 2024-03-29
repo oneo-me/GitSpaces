@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Avalonia.Collections;
+﻿using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using GitSpaces.Commands;
 using GitSpaces.Configs;

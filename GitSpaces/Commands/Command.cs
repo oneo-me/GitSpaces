@@ -1,10 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
 using Avalonia.Threading;
-using GitSpaces.Native;
+using GitSpaces.Services;
+using OpenUI.Services;
 
 namespace GitSpaces.Commands;
 
@@ -31,6 +30,7 @@ public partial class Command
 
     public bool Exec()
     {
+        var OS = Service.Get<ISystemService>();
         var start = new ProcessStartInfo();
         start.FileName = OS.GitInstallPath;
         start.Arguments = "--no-pager -c core.quotepath=off " + Args;
@@ -135,6 +135,7 @@ public partial class Command
 
     public ReadToEndResult ReadToEnd()
     {
+        var OS = Service.Get<ISystemService>();
         var start = new ProcessStartInfo();
         start.FileName = OS.GitInstallPath;
         start.Arguments = "--no-pager -c core.quotepath=off " + Args;

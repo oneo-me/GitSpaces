@@ -1,9 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace GitSpaces.Models;
+﻿namespace GitSpaces.Models;
 
 public interface IRepository
 {

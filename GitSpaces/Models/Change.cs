@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GitSpaces.Models;
+﻿namespace GitSpaces.Models;
 
 public enum ChangeViewMode
 {

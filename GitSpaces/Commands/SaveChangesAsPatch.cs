@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+﻿using System.Diagnostics;
 using Avalonia.Threading;
 using GitSpaces.Models;
-using GitSpaces.Native;
+using GitSpaces.Services;
+using OpenUI.Services;
 
 namespace GitSpaces.Commands;
 
@@ -25,6 +23,7 @@ public static class SaveChangesAsPatch
 
     static bool ProcessSingleChange(string repo, DiffOption opt, FileStream writer)
     {
+        var OS = Service.Get<ISystemService>();
         var starter = new ProcessStartInfo();
         starter.WorkingDirectory = repo;
         starter.FileName = OS.GitInstallPath;

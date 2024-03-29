@@ -1,7 +1,8 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using GitSpaces.Native;
+using GitSpaces.Services;
+using OpenUI.Services;
 using Version = GitSpaces.Models.Version;
 
 namespace GitSpaces.OldViews;
@@ -25,6 +26,7 @@ public partial class SelfUpdate : Window
 
     void GotoDownload(object sender, RoutedEventArgs e)
     {
+        var OS = Service.Get<ISystemService>();
         OS.OpenBrowser("https://github.com/sourcegit-scm/sourcegit/releases/latest");
         e.Handled = true;
     }

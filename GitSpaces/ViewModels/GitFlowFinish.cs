@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using GitSpaces.Models;
+﻿using GitSpaces.Models;
 using GitFlow = GitSpaces.Commands.GitFlow;
 
 namespace GitSpaces.ViewModels;

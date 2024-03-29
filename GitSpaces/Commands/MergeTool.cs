@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Avalonia.Threading;
+﻿using Avalonia.Threading;
 using GitSpaces.Models;
 
 namespace GitSpaces.Commands;

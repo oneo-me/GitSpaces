@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Avalonia.Collections;
+﻿using Avalonia.Collections;
 
 namespace GitSpaces.Models;
 

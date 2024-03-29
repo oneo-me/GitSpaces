@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace GitSpaces.Commands;
+﻿namespace GitSpaces.Commands;
 
 public class Commit : Command
 {

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 using GitSpaces.Commands;
 using Branch = GitSpaces.Models.Branch;
 using Commit = GitSpaces.Models.Commit;

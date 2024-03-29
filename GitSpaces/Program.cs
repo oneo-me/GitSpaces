@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using Avalonia;
 using GitSpaces.Logging;
-using GitSpaces.Native;
 using OpenUI.Desktop;
 
 namespace GitSpaces;

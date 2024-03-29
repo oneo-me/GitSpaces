@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
-using System.IO;
 using Avalonia.Media.Imaging;
-using GitSpaces.Native;
+using GitSpaces.Services;
+using OpenUI.Services;
 
 namespace GitSpaces.Commands;
 
@@ -9,6 +9,7 @@ public static class GetImageFileAsBitmap
 {
     public static Bitmap Run(string repo, string revision, string file)
     {
+        var OS = Service.Get<ISystemService>();
         var starter = new ProcessStartInfo();
         starter.WorkingDirectory = repo;
         starter.FileName = OS.GitInstallPath;

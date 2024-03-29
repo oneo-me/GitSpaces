@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Avalonia.Data.Converters;
+﻿using Avalonia.Data.Converters;
 
 namespace GitSpaces.Converters;
 

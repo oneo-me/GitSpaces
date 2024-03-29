@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using GitSpaces.Models;
 
 namespace GitSpaces.ViewModels;

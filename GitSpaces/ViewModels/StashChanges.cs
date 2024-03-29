@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using GitSpaces.Models;
+﻿using GitSpaces.Models;
 using Stash = GitSpaces.Commands.Stash;
 
 namespace GitSpaces.ViewModels;

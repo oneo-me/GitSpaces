@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Avalonia.Media;
+﻿using Avalonia.Media;
 using GitSpaces.Models;
 
 namespace GitSpaces.ViewModels;

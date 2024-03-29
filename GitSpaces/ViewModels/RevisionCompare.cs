@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using GitSpaces.Commands;
 using GitSpaces.Configs;
 using GitSpaces.Models;
-using GitSpaces.Native;
+using GitSpaces.Services;
+using OpenUI.Services;
 using Commit = GitSpaces.Models.Commit;
 
 namespace GitSpaces.ViewModels;
@@ -168,6 +165,7 @@ public class RevisionCompare : ObservableObject
             explore.IsEnabled = File.Exists(full);
             explore.Click += (_, ev) =>
             {
+                var OS = Service.Get<ISystemService>();
                 OS.OpenInFileManager(full, true);
                 ev.Handled = true;
             };

@@ -1,8 +1,8 @@
-﻿using System;
-using Avalonia.Collections;
+﻿using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using GitSpaces.Configs;
-using GitSpaces.Native;
+using GitSpaces.Services;
+using OpenUI.Services;
 
 namespace GitSpaces.ViewModels;
 
@@ -64,6 +64,7 @@ public class Welcome : ObservableObject
         }
         else
         {
+            var OS = Service.Get<ISystemService>();
             OS.OpenTerminal(null);
         }
     }

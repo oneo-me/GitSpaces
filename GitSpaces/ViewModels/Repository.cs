@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using GitSpaces.Commands;
 using GitSpaces.Models;
-using GitSpaces.Native;
 using GitSpaces.OldViews;
+using GitSpaces.Services;
+using OpenUI.Services;
 using Branch = GitSpaces.Models.Branch;
 using Commit = GitSpaces.Models.Commit;
 using GitFlow = GitSpaces.Models.GitFlow;
@@ -63,7 +60,6 @@ public class Repository : ObservableObject, IRepository
         set
         {
             if (SetProperty(ref _selectedViewIndex, value))
-            {
                 switch (value)
                 {
                     case 1:
@@ -78,7 +74,6 @@ public class Repository : ObservableObject, IRepository
                         SelectedView = _histories;
                         break;
                 }
-            }
         }
     }
 
@@ -165,9 +160,7 @@ public class Repository : ObservableObject, IRepository
         set
         {
             if (SetProperty(ref _includeUntracked, value))
-            {
                 Task.Run(RefreshWorkingCopyChanges);
-            }
         }
     }
 
@@ -268,21 +261,19 @@ public class Repository : ObservableObject, IRepository
 
     public void OpenInFileManager()
     {
+        var OS = Service.Get<ISystemService>();
         OS.OpenInFileManager(_fullpath);
     }
 
     public void OpenInVSCode()
     {
+        var OS = Service.Get<ISystemService>();
         OS.OpenInVSCode(_fullpath);
-    }
-
-    public void OpenInFleet()
-    {
-        OS.OpenInFleet(_fullpath);
     }
 
     public void OpenInTerminal()
     {
+        var OS = Service.Get<ISystemService>();
         OS.OpenTerminal(_fullpath);
     }
 
@@ -355,7 +346,6 @@ public class Repository : ObservableObject, IRepository
 
         var visible = new List<Commit>();
         foreach (var c in _histories.Commits)
-        {
             if (c.SHA.Contains(_searchCommitFilter, StringComparison.OrdinalIgnoreCase)
                 || c.Subject.Contains(_searchCommitFilter, StringComparison.OrdinalIgnoreCase)
                 || c.Message.Contains(_searchCommitFilter, StringComparison.OrdinalIgnoreCase)
@@ -363,10 +353,7 @@ public class Repository : ObservableObject, IRepository
                 || c.Committer.Name.Contains(_searchCommitFilter, StringComparison.OrdinalIgnoreCase)
                 || c.Author.Email.Contains(_searchCommitFilter, StringComparison.OrdinalIgnoreCase)
                 || c.Committer.Email.Contains(_searchCommitFilter, StringComparison.OrdinalIgnoreCase))
-            {
                 visible.Add(c);
-            }
-        }
 
         SearchedCommits = visible;
     }
@@ -555,7 +542,6 @@ public class Repository : ObservableObject, IRepository
         var limits = $"-{Preference.Instance.MaxHistoryCommits} ";
         var validFilters = new List<string>();
         foreach (var filter in Filters)
-        {
             if (filter.StartsWith("refs/", StringComparison.Ordinal))
             {
                 if (_branches.FindIndex(x => x.FullName == filter) >= 0) validFilters.Add(filter);
@@ -564,16 +550,11 @@ public class Repository : ObservableObject, IRepository
             {
                 if (_tags.FindIndex(t => t.Name == filter) >= 0) validFilters.Add(filter);
             }
-        }
 
         if (validFilters.Count > 0)
-        {
             limits += string.Join(" ", validFilters);
-        }
         else
-        {
             limits += "--branches --remotes --tags";
-        }
 
         var commits = new QueryCommits(FullPath, limits).Result();
         Dispatcher.UIThread.Invoke(() =>
@@ -606,7 +587,7 @@ public class Repository : ObservableObject, IRepository
         var revertMerge = Path.Combine(_gitDir, "REVERT_HEAD");
         var otherMerge = Path.Combine(_gitDir, "MERGE_HEAD");
         var runningMerge = File.Exists(cherryPickMerge) ||
-                           File.Exists(rebaseMerge) && Directory.Exists(rebaseMergeFolder) ||
+                           (File.Exists(rebaseMerge) && Directory.Exists(rebaseMergeFolder)) ||
                            File.Exists(revertMerge) ||
                            File.Exists(otherMerge);
 
@@ -928,9 +909,8 @@ public class Repository : ObservableObject, IRepository
 
         var remoteBranches = new List<Branch>();
         foreach (var b in Branches)
-        {
-            if (!b.IsLocal) remoteBranches.Add(b);
-        }
+            if (!b.IsLocal)
+                remoteBranches.Add(b);
 
         if (remoteBranches.Count > 0)
         {
@@ -948,9 +928,7 @@ public class Repository : ObservableObject, IRepository
                 target.Click += (o, e) =>
                 {
                     if (Commands.Branch.SetUpstream(_fullpath, branch.Name, upstream))
-                    {
                         Task.Run(RefreshBranches);
-                    }
 
                     e.Handled = true;
                 };
@@ -963,9 +941,7 @@ public class Repository : ObservableObject, IRepository
             unsetUpstream.Click += (_, e) =>
             {
                 if (Commands.Branch.SetUpstream(_fullpath, branch.Name, string.Empty))
-                {
                     Task.Run(RefreshBranches);
-                }
 
                 e.Handled = true;
             };
@@ -1081,14 +1057,12 @@ public class Repository : ObservableObject, IRepository
         checkout.Click += (o, e) =>
         {
             foreach (var b in Branches)
-            {
                 if (b.IsLocal && b.Upstream == branch.FullName)
                 {
                     if (b.IsCurrent) return;
                     if (PopupHost.CanCreatePopup()) PopupHost.ShowAndStartPopup(new Checkout(this, b.Name));
                     return;
                 }
-            }
 
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new CreateBranch(this, branch));
             e.Handled = true;
@@ -1288,9 +1262,7 @@ public class Repository : ObservableObject, IRepository
 
             var launcher = App123.GetTopLevel().DataContext as Launcher;
             if (launcher != null)
-            {
                 launcher.OpenRepositoryInTab(node, null);
-            }
 
             ev.Handled = true;
         };

@@ -1,22 +1,22 @@
-﻿using System;
 using System.Diagnostics;
-using System.IO;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Versioning;
 using System.Text;
-using Avalonia;
-using Avalonia.Media;
 
-namespace GitSpaces.Native;
+namespace GitSpaces.Services;
 
-[SupportedOSPlatform("macOS")]
-class MacOS : OS.IBackend
+[SupportedOSPlatform("osx")]
+[SuppressMessage("ReSharper", "InconsistentNaming")]
+public class MacOSSystemService : ISystemService
 {
-    public void SetupApp(AppBuilder builder)
+    public string GitInstallPath { get; set; }
+
+    public string VSCodeExecutableFile { get; }
+
+    public MacOSSystemService()
     {
-        builder.With(new FontManagerOptions
-        {
-            DefaultFamilyName = "PingFang SC"
-        });
+        GitInstallPath = FindGitExecutable();
+        VSCodeExecutableFile = FindVSCode();
     }
 
     public string FindGitExecutable()
@@ -33,29 +33,9 @@ class MacOS : OS.IBackend
         return string.Empty;
     }
 
-    public string FindFleet()
-    {
-        var toolPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}/Applications/Fleet.app/Contents/MacOS/Fleet";
-        if (File.Exists(toolPath))
-            return toolPath;
-        return string.Empty;
-    }
-
     public void OpenBrowser(string url)
     {
         Process.Start("open", url);
-    }
-
-    public void OpenInFileManager(string path, bool select)
-    {
-        if (Directory.Exists(path))
-        {
-            Process.Start("open", path);
-        }
-        else if (File.Exists(path))
-        {
-            Process.Start("open", $"\"{path}\" -R");
-        }
     }
 
     public void OpenTerminal(string workdir)
@@ -76,8 +56,25 @@ class MacOS : OS.IBackend
         proc.Exited += (o, e) => File.Delete(tmp);
     }
 
-    public void OpenWithDefaultEditor(string file)
+    public void OpenInFileManager(string path, bool select)
     {
-        Process.Start("open", file);
+        if (Directory.Exists(path))
+            Process.Start("open", path);
+        else if (File.Exists(path))
+            Process.Start("open", $"\"{path}\" -R");
+    }
+
+    public void OpenInVSCode(string repo)
+    {
+        if (string.IsNullOrEmpty(VSCodeExecutableFile))
+        {
+            App123.RaiseException(repo, "Visual Studio Code can NOT be found in your system!!!");
+            return;
+        }
+
+        Process.Start(new ProcessStartInfo
+        {
+            WorkingDirectory = repo, FileName = VSCodeExecutableFile, Arguments = $"\"{repo}\"", UseShellExecute = false
+        });
     }
 }

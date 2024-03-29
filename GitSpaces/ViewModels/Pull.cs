@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using GitSpaces.Commands;
 using Branch = GitSpaces.Models.Branch;
 using Remote = GitSpaces.Models.Remote;

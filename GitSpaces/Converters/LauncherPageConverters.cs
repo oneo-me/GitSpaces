@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Avalonia.Collections;
+﻿using Avalonia.Collections;
 using Avalonia.Data.Converters;
 using GitSpaces.ViewModels;
 

@@ -38,6 +38,15 @@ public class App : AppBase
 
     public override void OnFrameworkInitializationCompleted()
     {
+        if (OperatingSystem.IsWindows())
+            Service.Add<ISystemService>(new WindowSystemService());
+        else if (OperatingSystem.IsMacOS())
+            Service.Add<ISystemService>(new MacOSSystemService());
+        else if (OperatingSystem.IsLinux())
+            Service.Add<ISystemService>(new LinuxSystemService());
+        else
+            throw new PlatformNotSupportedException();
+
         Service.Add(new ConfigService());
         Service.Add(new UpdateService());
 
@@ -47,11 +56,6 @@ public class App : AppBase
 
 public class App123 : Application
 {
-    // static App123()
-    // {
-    //     OS.SetupApp(builder);
-    // }
-
     public static void RaiseException(string context, string message)
     {
         if (Current is App123 app && app._notificationReceiver != null)

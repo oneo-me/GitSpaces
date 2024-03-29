@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using GitSpaces.Commands;
 using GitSpaces.Configs;
 using GitSpaces.Models;
-using GitSpaces.Native;
+using GitSpaces.Services;
+using OpenUI.Services;
 using Commit = GitSpaces.Models.Commit;
 using Object = GitSpaces.Models.Object;
 
@@ -85,13 +82,9 @@ public class CommitDetail : ObservableObject
             if (SetProperty(ref _selectedChangeNode, value))
             {
                 if (value == null)
-                {
                     SelectedChange = null;
-                }
                 else
-                {
                     SelectedChange = value.Backend as Change;
-                }
             }
         }
     }
@@ -102,9 +95,7 @@ public class CommitDetail : ObservableObject
         set
         {
             if (SetProperty(ref _searchChangeFilter, value))
-            {
                 RefreshVisibleChanges();
-            }
         }
     }
 
@@ -120,13 +111,9 @@ public class CommitDetail : ObservableObject
         set
         {
             if (SetProperty(ref _selectedRevisionFileNode, value) && value != null && !value.IsFolder)
-            {
                 RefreshViewRevisionFile(value.Backend as Object);
-            }
             else
-            {
                 ViewRevisionFileContent = null;
-            }
         }
     }
 
@@ -136,9 +123,7 @@ public class CommitDetail : ObservableObject
         set
         {
             if (SetProperty(ref _searchFileFilter, value))
-            {
                 RefreshVisibleFiles();
-            }
         }
     }
 
@@ -227,6 +212,7 @@ public class CommitDetail : ObservableObject
             explore.IsEnabled = File.Exists(full);
             explore.Click += (_, ev) =>
             {
+                var OS = Service.Get<ISystemService>();
                 OS.OpenInFileManager(full, true);
                 ev.Handled = true;
             };
@@ -283,6 +269,7 @@ public class CommitDetail : ObservableObject
         explore.Icon = App123.CreateMenuIcon("Icons.Folder.Open");
         explore.Click += (_, ev) =>
         {
+            var OS = Service.Get<ISystemService>();
             OS.OpenInFileManager(full, file.Type == ObjectType.Blob);
             ev.Handled = true;
         };
@@ -358,12 +345,8 @@ public class CommitDetail : ObservableObject
             {
                 visible = new();
                 foreach (var c in changes)
-                {
                     if (c.Path.Contains(_searchChangeFilter, StringComparison.OrdinalIgnoreCase))
-                    {
                         visible.Add(c);
-                    }
-                }
             }
 
             var tree = FileTreeNode.Build(visible);
@@ -385,12 +368,8 @@ public class CommitDetail : ObservableObject
             {
                 visible = new();
                 foreach (var f in files)
-                {
                     if (f.Path.Contains(_searchFileFilter, StringComparison.OrdinalIgnoreCase))
-                    {
                         visible.Add(f);
-                    }
-                }
             }
 
             var tree = FileTreeNode.Build(visible);
@@ -414,12 +393,8 @@ public class CommitDetail : ObservableObject
         {
             var visible = new List<Change>();
             foreach (var c in _changes)
-            {
                 if (c.Path.Contains(_searchChangeFilter, StringComparison.OrdinalIgnoreCase))
-                {
                     visible.Add(c);
-                }
-            }
 
             VisibleChanges = visible;
         }
@@ -436,12 +411,8 @@ public class CommitDetail : ObservableObject
         {
             visible = new();
             foreach (var f in _revisionFiles)
-            {
                 if (f.Path.Contains(_searchFileFilter, StringComparison.OrdinalIgnoreCase))
-                {
                     visible.Add(f);
-                }
-            }
         }
 
         RevisionFilesTree = FileTreeNode.Build(visible);
@@ -495,16 +466,10 @@ public class CommitDetail : ObservableObject
                         if (lines.Length == 3)
                         {
                             foreach (var line in lines)
-                            {
                                 if (line.StartsWith("oid sha256:", StringComparison.Ordinal))
-                                {
                                     obj.Object.Oid = line.Substring(11);
-                                }
                                 else if (line.StartsWith("size ", StringComparison.Ordinal))
-                                {
                                     obj.Object.Size = long.Parse(line.Substring(5));
-                                }
-                            }
 
                             Dispatcher.UIThread.Invoke(() =>
                             {

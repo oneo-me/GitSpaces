@@ -5,8 +5,9 @@ using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using GitSpaces.Commands;
 using GitSpaces.Models;
-using GitSpaces.Native;
+using GitSpaces.Services;
 using GitSpaces.ViewModels;
+using OpenUI.Services;
 
 namespace GitSpaces.Configs;
 
@@ -50,7 +51,6 @@ public class Preference : ObservableObject
 
             if (!_instance.IsGitConfigured)
             {
-                _instance.GitInstallPath = OS.FindGitExecutable();
             }
 
             return _instance;
@@ -181,9 +181,10 @@ public class Preference : ObservableObject
 
     public string GitInstallPath
     {
-        get => OS.GitInstallPath;
+        get => string.Empty;
         set
         {
+            var OS = Service.Get<ISystemService>();
             if (OS.GitInstallPath != value)
             {
                 OS.GitInstallPath = value;

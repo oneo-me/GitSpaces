@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Styling;
 using AvaloniaEdit;
 using AvaloniaEdit.TextMate;

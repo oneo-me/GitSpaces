@@ -1,5 +1,4 @@
-﻿using System;
-using Avalonia.Collections;
+﻿using Avalonia.Collections;
 using GitSpaces.Models;
 
 namespace GitSpaces.ViewModels;

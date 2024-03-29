@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using GitSpaces.Commands;
+﻿using GitSpaces.Commands;
 
 namespace GitSpaces.ViewModels;
 

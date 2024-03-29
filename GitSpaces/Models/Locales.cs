@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace GitSpaces.Models;
+﻿namespace GitSpaces.Models;
 
 public class Locale
 {

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 using GitSpaces.Models;
 using GitFlow = GitSpaces.Commands.GitFlow;
 

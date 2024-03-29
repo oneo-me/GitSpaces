@@ -1,7 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
-using GitSpaces.Native;
+using GitSpaces.Services;
+using OpenUI.Services;
 
 namespace GitSpaces.ViewModels;
 
@@ -67,12 +68,14 @@ public class RepositoryNode : ObservableObject
     public void OpenInFileManager()
     {
         if (!IsRepository) return;
+        var OS = Service.Get<ISystemService>();
         OS.OpenInFileManager(_id);
     }
 
     public void OpenTerminal()
     {
         if (!IsRepository) return;
+        var OS = Service.Get<ISystemService>();
         OS.OpenTerminal(_id);
     }
 
