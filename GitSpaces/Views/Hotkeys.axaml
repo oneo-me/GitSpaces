@@ -6,7 +6,6 @@
         xmlns:vm="using:GitSpaces.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="GitSpaces.Views.Hotkeys"
-        Icon="/App.ico"
         Title="{DynamicResource Text.Hotkeys}"
         Background="Transparent"
         SizeToContent="WidthAndHeight"

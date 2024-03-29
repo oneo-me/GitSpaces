@@ -6,7 +6,6 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="GitSpaces.Views.About"
         x:DataType="v:About"
-        Icon="/App.ico"
         Title="{DynamicResource Text.About}"
         Background="Transparent"
         SizeToContent="WidthAndHeight"
@@ -62,7 +61,6 @@
             <Image Grid.Column="0"
                    Width="200" Height="200"
                    Margin="8,0"
-                   Source="/App.ico"
                    HorizontalAlignment="Center" />
 
             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="0,20,32,0">

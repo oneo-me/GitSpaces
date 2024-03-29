@@ -9,7 +9,6 @@
         x:Class="GitSpaces.Views.SelfUpdate"
         x:DataType="vm:SelfUpdate"
         Title="{DynamicResource Text.SelfUpdate.Title}"
-        Icon="/App.ico"
         Background="Transparent"
         SizeToContent="WidthAndHeight"
         CanResize="False"

@@ -8,7 +8,6 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="GitSpaces.Views.AssumeUnchangedManager"
         x:DataType="vm:AssumeUnchangedManager"
-        Icon="/App.ico"
         Title="{DynamicResource Text.AssumeUnchanged}"
         Background="Transparent"
         Width="600" Height="400"

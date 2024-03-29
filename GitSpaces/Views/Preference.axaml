@@ -10,7 +10,6 @@
         x:Class="GitSpaces.Views.Preference"
         x:DataType="vm:Preference"
         x:Name="me"
-        Icon="/App.ico"
         Title="{DynamicResource Text.Preference}"
         Background="Transparent"
         Width="600" SizeToContent="Height"

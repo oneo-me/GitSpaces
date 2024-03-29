@@ -10,7 +10,6 @@
         x:Class="GitSpaces.Views.FileHistories"
         x:DataType="vm:FileHistories"
         x:Name="me"
-        Icon="/App.ico"
         Title="{DynamicResource Text.FileHistory}"
         Background="Transparent"
         MinWidth="1280" MinHeight="720"

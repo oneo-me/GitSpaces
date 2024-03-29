@@ -3,6 +3,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using GitSpaces.Models;
 using GitSpaces.Native;
+using Version = GitSpaces.Models.Version;
 
 namespace GitSpaces.Views;
 

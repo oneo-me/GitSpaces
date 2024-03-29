@@ -9,7 +9,6 @@
         x:Class="GitSpaces.Views.Blame"
         x:Name="me"
         x:DataType="vm:Blame"
-        Icon="/App.ico"
         Title="{DynamicResource Text.Blame}"
         Background="Transparent"
         WindowStartupLocation="CenterOwner"

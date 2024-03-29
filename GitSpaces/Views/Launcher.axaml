@@ -10,7 +10,6 @@
         x:Class="GitSpaces.Views.Launcher"
         x:DataType="vm:Launcher"
         x:Name="me"
-        Icon="/App.ico"
         Title="GitSpaces"
         Background="Transparent"
         MinWidth="1280" MinHeight="720"

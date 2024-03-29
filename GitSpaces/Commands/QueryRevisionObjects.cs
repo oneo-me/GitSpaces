@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using GitSpaces.Models;
+using Object = GitSpaces.Models.Object;
 
 namespace GitSpaces.Commands;
 

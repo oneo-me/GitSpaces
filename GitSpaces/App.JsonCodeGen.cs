@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
-using GitSpaces.Models;
 using GitSpaces.ViewModels;
+using Version = GitSpaces.Models.Version;
 
 namespace GitSpaces;
 

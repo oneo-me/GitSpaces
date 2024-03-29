@@ -11,6 +11,7 @@ using AvaloniaEdit;
 using AvaloniaEdit.TextMate;
 using GitSpaces.Models;
 using Object = GitSpaces.Models.Object;
+using Path = Avalonia.Controls.Shapes.Path;
 
 namespace GitSpaces.Views;
 

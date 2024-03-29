@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using GitSpaces.Commands;
+using GC = GitSpaces.Commands.GC;
 
 namespace GitSpaces.ViewModels;
 
