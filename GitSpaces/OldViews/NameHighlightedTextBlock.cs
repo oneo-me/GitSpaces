@@ -51,7 +51,7 @@ public class NameHighlightedTextBlock : Control
 
     public NameHighlightedTextBlock(string nameKey, params object[] args)
     {
-        Text = App.Text(nameKey, args);
+        Text = App123.Text(nameKey, args);
         VerticalAlignment = VerticalAlignment.Center;
     }
 

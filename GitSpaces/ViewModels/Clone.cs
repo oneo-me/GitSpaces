@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using GitSpaces.Commands;
+using GitSpaces.Configs;
 
 namespace GitSpaces.ViewModels;
 
@@ -98,7 +99,7 @@ public class Clone : Popup
             {
                 CallUIThread(() =>
                 {
-                    App.RaiseException(HostPageId, $"Folder '{path}' can NOT be found");
+                    App123.RaiseException(HostPageId, $"Folder '{path}' can NOT be found");
                 });
                 return false;
             }

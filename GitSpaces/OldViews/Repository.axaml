@@ -6,6 +6,7 @@
              xmlns:vm="using:GitSpaces.ViewModels"
              xmlns:c="using:GitSpaces.Converters"
              xmlns:oldViews="clr-namespace:GitSpaces.OldViews"
+             xmlns:configs="clr-namespace:GitSpaces.Configs"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="GitSpaces.OldViews.Repository"
              x:DataType="vm:Repository">
@@ -85,7 +86,7 @@
                 <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,4,0">
                     <ToggleButton Classes="layout_direction"
                                   Width="32" Height="26"
-                                  IsChecked="{Binding Source={x:Static vm:Preference.Instance}, Path=UseTwoColumnsLayoutInHistories, Mode=TwoWay}"
+                                  IsChecked="{Binding Source={x:Static configs:Preference.Instance}, Path=UseTwoColumnsLayoutInHistories, Mode=TwoWay}"
                                   IsVisible="{Binding SelectedViewIndex, Converter={x:Static c:IntConverters.IsZero}}"
                                   ToolTip.Tip="{DynamicResource Text.Histories.DisplayMode}" />
 

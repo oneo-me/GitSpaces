@@ -208,7 +208,7 @@ public class Histories : ObservableObject
         {
             var reset = new MenuItem();
             reset.Header = new NameHighlightedTextBlock("CommitCM.Reset", current.Name);
-            reset.Icon = App.CreateMenuIcon("Icons.Reset");
+            reset.Icon = App123.CreateMenuIcon("Icons.Reset");
             reset.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new Reset(_repo, current, commit));
@@ -219,8 +219,8 @@ public class Histories : ObservableObject
         else
         {
             var reword = new MenuItem();
-            reword.Header = App.Text("CommitCM.Reword");
-            reword.Icon = App.CreateMenuIcon("Icons.Edit");
+            reword.Header = App123.Text("CommitCM.Reword");
+            reword.Icon = App123.CreateMenuIcon("Icons.Edit");
             reword.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new Reword(_repo, commit));
@@ -229,8 +229,8 @@ public class Histories : ObservableObject
             menu.Items.Add(reword);
 
             var squash = new MenuItem();
-            squash.Header = App.Text("CommitCM.Squash");
-            squash.Icon = App.CreateMenuIcon("Icons.SquashIntoParent");
+            squash.Header = App123.Text("CommitCM.Squash");
+            squash.Icon = App123.CreateMenuIcon("Icons.SquashIntoParent");
             squash.IsEnabled = commit.Parents.Count == 1;
             squash.Click += (o, e) =>
             {
@@ -249,7 +249,7 @@ public class Histories : ObservableObject
         {
             var rebase = new MenuItem();
             rebase.Header = new NameHighlightedTextBlock("CommitCM.Rebase", current.Name);
-            rebase.Icon = App.CreateMenuIcon("Icons.Rebase");
+            rebase.Icon = App123.CreateMenuIcon("Icons.Rebase");
             rebase.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new Rebase(_repo, current, commit));
@@ -258,8 +258,8 @@ public class Histories : ObservableObject
             menu.Items.Add(rebase);
 
             var cherryPick = new MenuItem();
-            cherryPick.Header = App.Text("CommitCM.CherryPick");
-            cherryPick.Icon = App.CreateMenuIcon("Icons.CherryPick");
+            cherryPick.Header = App123.Text("CommitCM.CherryPick");
+            cherryPick.Icon = App123.CreateMenuIcon("Icons.CherryPick");
             cherryPick.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new CherryPick(_repo, commit));
@@ -270,8 +270,8 @@ public class Histories : ObservableObject
         else
         {
             var revert = new MenuItem();
-            revert.Header = App.Text("CommitCM.Revert");
-            revert.Icon = App.CreateMenuIcon("Icons.Undo");
+            revert.Header = App123.Text("CommitCM.Revert");
+            revert.Icon = App123.CreateMenuIcon("Icons.Undo");
             revert.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new Revert(_repo, commit));
@@ -286,8 +286,8 @@ public class Histories : ObservableObject
         });
 
         var createBranch = new MenuItem();
-        createBranch.Icon = App.CreateMenuIcon("Icons.Branch.Add");
-        createBranch.Header = App.Text("CreateBranch");
+        createBranch.Icon = App123.CreateMenuIcon("Icons.Branch.Add");
+        createBranch.Header = App123.Text("CreateBranch");
         createBranch.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new CreateBranch(_repo, commit));
@@ -296,8 +296,8 @@ public class Histories : ObservableObject
         menu.Items.Add(createBranch);
 
         var createTag = new MenuItem();
-        createTag.Icon = App.CreateMenuIcon("Icons.Tag.Add");
-        createTag.Header = App.Text("CreateTag");
+        createTag.Icon = App123.CreateMenuIcon("Icons.Tag.Add");
+        createTag.Header = App123.Text("CreateTag");
         createTag.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new CreateTag(_repo, commit));
@@ -310,11 +310,11 @@ public class Histories : ObservableObject
         });
 
         var saveToPatch = new MenuItem();
-        saveToPatch.Icon = App.CreateMenuIcon("Icons.Diff");
-        saveToPatch.Header = App.Text("CommitCM.SaveAsPatch");
+        saveToPatch.Icon = App123.CreateMenuIcon("Icons.Diff");
+        saveToPatch.Header = App123.Text("CommitCM.SaveAsPatch");
         saveToPatch.Click += async (_, e) =>
         {
-            var topLevel = App.GetTopLevel();
+            var topLevel = App123.GetTopLevel();
             if (topLevel == null) return;
 
             var options = new FolderPickerOpenOptions
@@ -325,7 +325,7 @@ public class Histories : ObservableObject
             if (selected.Count == 1)
             {
                 var succ = new FormatPatch(_repo.FullPath, commit.SHA, selected[0].Path.LocalPath).Exec();
-                if (succ) App.SendNotification(_repo.FullPath, App.Text("SaveAsPatchSuccess"));
+                if (succ) App123.SendNotification(_repo.FullPath, App123.Text("SaveAsPatchSuccess"));
             }
 
             e.Handled = true;
@@ -333,8 +333,8 @@ public class Histories : ObservableObject
         menu.Items.Add(saveToPatch);
 
         var archive = new MenuItem();
-        archive.Icon = App.CreateMenuIcon("Icons.Archive");
-        archive.Header = App.Text("Archive");
+        archive.Icon = App123.CreateMenuIcon("Icons.Archive");
+        archive.Header = App123.Text("Archive");
         archive.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new Archive(_repo, commit));
@@ -347,11 +347,11 @@ public class Histories : ObservableObject
         });
 
         var copySHA = new MenuItem();
-        copySHA.Header = App.Text("CommitCM.CopySHA");
-        copySHA.Icon = App.CreateMenuIcon("Icons.Copy");
+        copySHA.Header = App123.Text("CommitCM.CopySHA");
+        copySHA.Icon = App123.CreateMenuIcon("Icons.Copy");
         copySHA.Click += (o, e) =>
         {
-            App.CopyText(commit.SHA);
+            App123.CopyText(commit.SHA);
             e.Handled = true;
         };
         menu.Items.Add(copySHA);
@@ -361,7 +361,7 @@ public class Histories : ObservableObject
     void FillCurrentBranchMenu(ContextMenu menu, Branch current)
     {
         var submenu = new MenuItem();
-        submenu.Icon = App.CreateMenuIcon("Icons.Branch");
+        submenu.Icon = App123.CreateMenuIcon("Icons.Branch");
         submenu.Header = current.Name;
 
         if (!string.IsNullOrEmpty(current.Upstream))
@@ -370,7 +370,7 @@ public class Histories : ObservableObject
 
             var fastForward = new MenuItem();
             fastForward.Header = new NameHighlightedTextBlock("BranchCM.FastForward", upstream);
-            fastForward.Icon = App.CreateMenuIcon("Icons.FastForward");
+            fastForward.Icon = App123.CreateMenuIcon("Icons.FastForward");
             fastForward.IsEnabled = !string.IsNullOrEmpty(current.UpstreamTrackStatus) && current.UpstreamTrackStatus.IndexOf('↑') < 0;
             ;
             fastForward.Click += (o, e) =>
@@ -382,7 +382,7 @@ public class Histories : ObservableObject
 
             var pull = new MenuItem();
             pull.Header = new NameHighlightedTextBlock("BranchCM.Pull", upstream);
-            pull.Icon = App.CreateMenuIcon("Icons.Pull");
+            pull.Icon = App123.CreateMenuIcon("Icons.Pull");
             pull.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new Pull(_repo, null));
@@ -393,7 +393,7 @@ public class Histories : ObservableObject
 
         var push = new MenuItem();
         push.Header = new NameHighlightedTextBlock("BranchCM.Push", current.Name);
-        push.Icon = App.CreateMenuIcon("Icons.Push");
+        push.Icon = App123.CreateMenuIcon("Icons.Push");
         push.IsEnabled = _repo.Remotes.Count > 0;
         push.Click += (o, e) =>
         {
@@ -411,7 +411,7 @@ public class Histories : ObservableObject
         {
             var finish = new MenuItem();
             finish.Header = new NameHighlightedTextBlock("BranchCM.Finish", current.Name);
-            finish.Icon = App.CreateMenuIcon("Icons.Flow");
+            finish.Icon = App123.CreateMenuIcon("Icons.Flow");
             finish.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new GitFlowFinish(_repo, current, type));
@@ -426,7 +426,7 @@ public class Histories : ObservableObject
 
         var rename = new MenuItem();
         rename.Header = new NameHighlightedTextBlock("BranchCM.Rename", current.Name);
-        rename.Icon = App.CreateMenuIcon("Icons.Rename");
+        rename.Icon = App123.CreateMenuIcon("Icons.Rename");
         rename.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new RenameBranch(_repo, current));
@@ -440,12 +440,12 @@ public class Histories : ObservableObject
     void FillOtherLocalBranchMenu(ContextMenu menu, Branch branch, Branch current, bool merged)
     {
         var submenu = new MenuItem();
-        submenu.Icon = App.CreateMenuIcon("Icons.Branch");
+        submenu.Icon = App123.CreateMenuIcon("Icons.Branch");
         submenu.Header = branch.Name;
 
         var checkout = new MenuItem();
         checkout.Header = new NameHighlightedTextBlock("BranchCM.Checkout", branch.Name);
-        checkout.Icon = App.CreateMenuIcon("Icons.Check");
+        checkout.Icon = App123.CreateMenuIcon("Icons.Check");
         checkout.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowAndStartPopup(new Checkout(_repo, branch.Name));
@@ -455,7 +455,7 @@ public class Histories : ObservableObject
 
         var merge = new MenuItem();
         merge.Header = new NameHighlightedTextBlock("BranchCM.Merge", branch.Name, current.Name);
-        merge.Icon = App.CreateMenuIcon("Icons.Merge");
+        merge.Icon = App123.CreateMenuIcon("Icons.Merge");
         merge.IsEnabled = !merged;
         merge.Click += (o, e) =>
         {
@@ -473,7 +473,7 @@ public class Histories : ObservableObject
         {
             var finish = new MenuItem();
             finish.Header = new NameHighlightedTextBlock("BranchCM.Finish", branch.Name);
-            finish.Icon = App.CreateMenuIcon("Icons.Flow");
+            finish.Icon = App123.CreateMenuIcon("Icons.Flow");
             finish.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new GitFlowFinish(_repo, branch, type));
@@ -488,7 +488,7 @@ public class Histories : ObservableObject
 
         var rename = new MenuItem();
         rename.Header = new NameHighlightedTextBlock("BranchCM.Rename", branch.Name);
-        rename.Icon = App.CreateMenuIcon("Icons.Rename");
+        rename.Icon = App123.CreateMenuIcon("Icons.Rename");
         rename.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new RenameBranch(_repo, branch));
@@ -498,7 +498,7 @@ public class Histories : ObservableObject
 
         var delete = new MenuItem();
         delete.Header = new NameHighlightedTextBlock("BranchCM.Delete", branch.Name);
-        delete.Icon = App.CreateMenuIcon("Icons.Clear");
+        delete.Icon = App123.CreateMenuIcon("Icons.Clear");
         delete.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new DeleteBranch(_repo, branch));
@@ -514,12 +514,12 @@ public class Histories : ObservableObject
         var name = $"{branch.Remote}/{branch.Name}";
 
         var submenu = new MenuItem();
-        submenu.Icon = App.CreateMenuIcon("Icons.Branch");
+        submenu.Icon = App123.CreateMenuIcon("Icons.Branch");
         submenu.Header = name;
 
         var checkout = new MenuItem();
         checkout.Header = new NameHighlightedTextBlock("BranchCM.Checkout", name);
-        checkout.Icon = App.CreateMenuIcon("Icons.Check");
+        checkout.Icon = App123.CreateMenuIcon("Icons.Check");
         checkout.Click += (o, e) =>
         {
             foreach (var b in _repo.Branches)
@@ -539,7 +539,7 @@ public class Histories : ObservableObject
 
         var merge = new MenuItem();
         merge.Header = new NameHighlightedTextBlock("BranchCM.Merge", name, current.Name);
-        merge.Icon = App.CreateMenuIcon("Icons.Merge");
+        merge.Icon = App123.CreateMenuIcon("Icons.Merge");
         merge.IsEnabled = !merged;
         merge.Click += (o, e) =>
         {
@@ -555,7 +555,7 @@ public class Histories : ObservableObject
 
         var delete = new MenuItem();
         delete.Header = new NameHighlightedTextBlock("BranchCM.Delete", name);
-        delete.Icon = App.CreateMenuIcon("Icons.Clear");
+        delete.Icon = App123.CreateMenuIcon("Icons.Clear");
         delete.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new DeleteBranch(_repo, branch));
@@ -570,12 +570,12 @@ public class Histories : ObservableObject
     {
         var submenu = new MenuItem();
         submenu.Header = tag.Name;
-        submenu.Icon = App.CreateMenuIcon("Icons.Tag");
+        submenu.Icon = App123.CreateMenuIcon("Icons.Tag");
         submenu.MinWidth = 200;
 
         var push = new MenuItem();
         push.Header = new NameHighlightedTextBlock("TagCM.Push", tag.Name);
-        push.Icon = App.CreateMenuIcon("Icons.Push");
+        push.Icon = App123.CreateMenuIcon("Icons.Push");
         push.IsEnabled = _repo.Remotes.Count > 0;
         push.Click += (o, e) =>
         {
@@ -586,7 +586,7 @@ public class Histories : ObservableObject
 
         var delete = new MenuItem();
         delete.Header = new NameHighlightedTextBlock("TagCM.Delete", tag.Name);
-        delete.Icon = App.CreateMenuIcon("Icons.Clear");
+        delete.Icon = App123.CreateMenuIcon("Icons.Clear");
         delete.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new DeleteTag(_repo, tag));

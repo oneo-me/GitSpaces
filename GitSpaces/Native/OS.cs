@@ -83,7 +83,7 @@ public static class OS
     {
         if (string.IsNullOrEmpty(VSCodeExecutableFile))
         {
-            App.RaiseException(repo, "Visual Studio Code can NOT be found in your system!!!");
+            App123.RaiseException(repo, "Visual Studio Code can NOT be found in your system!!!");
             return;
         }
 
@@ -97,7 +97,7 @@ public static class OS
     {
         if (string.IsNullOrEmpty(FleetExecutableFile))
         {
-            App.RaiseException(repo, "Fleet can NOT be found in your system!!!");
+            App123.RaiseException(repo, "Fleet can NOT be found in your system!!!");
             return;
         }
 

@@ -6,6 +6,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using GitSpaces.Commands;
+using GitSpaces.Configs;
 using GitSpaces.Models;
 
 namespace GitSpaces.ViewModels;
@@ -139,7 +140,7 @@ public class DiffContext : ObservableObject
         var tool = ExternalMergeTools.Supported.Find(x => x.Type == type);
         if (tool == null || !File.Exists(exec))
         {
-            App.RaiseException(RepositoryPath, "Invalid merge tool in preference setting!");
+            App123.RaiseException(RepositoryPath, "Invalid merge tool in preference setting!");
             return;
         }
 

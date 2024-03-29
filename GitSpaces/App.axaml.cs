@@ -1,28 +1,54 @@
 using System.Collections;
 using System.Globalization;
-using System.Text.Json;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Styling;
-using Avalonia.Threading;
+using GitSpaces.Configs;
 using GitSpaces.Models;
 using GitSpaces.Resources;
+using GitSpaces.Services;
+using GitSpaces.Views;
 using OpenUI;
 using OpenUI.Reactive;
-using Launcher = GitSpaces.OldViews.Launcher;
+using OpenUI.Services;
 using Path = Avalonia.Controls.Shapes.Path;
-using SelfUpdate = GitSpaces.OldViews.SelfUpdate;
 
 namespace GitSpaces;
 
 public class App : AppBase
 {
+    public override void Initialize()
+    {
+        AvaloniaXamlLoader.Load(this);
+    }
+
+    protected override WindowModel CreateMain()
+    {
+        return new MainWindow_Model();
+    }
+
+    public override void OnFrameworkInitializationCompleted()
+    {
+        Service.Add(new ConfigService());
+        Service.Add(new UpdateService());
+
+        base.OnFrameworkInitializationCompleted();
+    }
+}
+
+public class App123 : Application
+{
+    // static App123()
+    // {
+    //     OS.SetupApp(builder);
+    // }
+
     public static void RaiseException(string context, string message)
     {
-        if (Current is App app && app._notificationReceiver != null)
+        if (Current is App123 app && app._notificationReceiver != null)
         {
             var notice = new Notification
             {
@@ -34,7 +60,7 @@ public class App : AppBase
 
     public static void SendNotification(string context, string message)
     {
-        if (Current is App app && app._notificationReceiver != null)
+        if (Current is App123 app && app._notificationReceiver != null)
         {
             var notice = new Notification
             {
@@ -46,7 +72,7 @@ public class App : AppBase
 
     public static void SetLocale(string localeKey)
     {
-        var app = Current as App;
+        var app = Current as App123;
         var rd = new ResourceDictionary();
 
         var culture = CultureInfo.GetCultureInfo(localeKey.Replace("_", "-"));
@@ -54,17 +80,11 @@ public class App : AppBase
 
         var sets = Locales.ResourceManager.GetResourceSet(culture, true, true);
         foreach (var obj in sets)
-        {
             if (obj is DictionaryEntry entry)
-            {
                 rd.Add(entry.Key, entry.Value);
-            }
-        }
 
         if (app._activeLocale != null)
-        {
             app.Resources.MergedDictionaries.Remove(app._activeLocale);
-        }
 
         app.Resources.MergedDictionaries.Add(rd);
         app._activeLocale = rd;
@@ -73,28 +93,18 @@ public class App : AppBase
     public static void SetTheme(string theme)
     {
         if (theme.Equals("Light", StringComparison.OrdinalIgnoreCase))
-        {
             Current.RequestedThemeVariant = ThemeVariant.Light;
-        }
         else if (theme.Equals("Dark", StringComparison.OrdinalIgnoreCase))
-        {
             Current.RequestedThemeVariant = ThemeVariant.Dark;
-        }
         else
-        {
             Current.RequestedThemeVariant = ThemeVariant.Default;
-        }
     }
 
     public static async void CopyText(string data)
     {
         if (Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-        {
             if (desktop.MainWindow.Clipboard is { } clipbord)
-            {
                 await clipbord.SetTextAsync(data);
-            }
-        }
     }
 
     public static string Text(string key, params object[] args)
@@ -117,51 +127,9 @@ public class App : AppBase
     public static TopLevel GetTopLevel()
     {
         if (Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-        {
             return desktop.MainWindow;
-        }
 
         return null;
-    }
-
-    public static void Check4Update(bool manually = false)
-    {
-        Task.Run(async () =>
-        {
-            try
-            {
-                // Fetch lastest release information.
-                var client = new HttpClient
-                {
-                    Timeout = TimeSpan.FromSeconds(2)
-                };
-                var data = await client.GetStringAsync("https://api.github.com/repos/sourcegit-scm/sourcegit/releases/latest");
-
-                // Parse json into Models.Version.
-                var ver = JsonSerializer.Deserialize(data, JsonCodeGen.Default.Version);
-                if (ver == null) return;
-
-                // Check if already up-to-date.
-                if (!ver.IsNewVersion)
-                {
-                    if (manually) ShowSelfUpdateResult(new AlreadyUpToDate());
-                    return;
-                }
-
-                // Should not check ignored tag if this is called manually.
-                if (!manually)
-                {
-                    var pref = ViewModels.Preference.Instance;
-                    if (ver.TagName == pref.IgnoreUpdateTag) return;
-                }
-
-                ShowSelfUpdateResult(ver);
-            }
-            catch (Exception e)
-            {
-                if (manually) ShowSelfUpdateResult(e);
-            }
-        });
     }
 
     public static void Quit()
@@ -177,50 +145,10 @@ public class App : AppBase
     {
         AvaloniaXamlLoader.Load(this);
 
-        var pref = ViewModels.Preference.Instance;
+        var pref = Preference.Instance;
 
         SetLocale(pref.Locale);
         SetTheme(pref.Theme);
-    }
-
-    protected override WindowModel CreateMain()
-    {
-        return null!;
-    }
-
-    public override void OnFrameworkInitializationCompleted()
-    {
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-        {
-            BindingPlugins.DataValidators.RemoveAt(0);
-
-            var launcher = new Launcher();
-            _notificationReceiver = launcher;
-            desktop.MainWindow = launcher;
-
-            if (ViewModels.Preference.Instance.Check4UpdatesOnStartup) Check4Update();
-        }
-
-        base.OnFrameworkInitializationCompleted();
-    }
-
-    static void ShowSelfUpdateResult(object data)
-    {
-        Dispatcher.UIThread.Post(() =>
-        {
-            if (Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            {
-                var dialog = new SelfUpdate
-                {
-                    DataContext = new ViewModels.SelfUpdate
-                    {
-                        Data = data
-                    }
-                };
-
-                dialog.Show(desktop.MainWindow);
-            }
-        });
     }
 
     ResourceDictionary _activeLocale;

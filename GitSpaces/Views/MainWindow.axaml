@@ -1,0 +1,10 @@
+<OpenView
+    x:Class="GitSpaces.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:GitSpaces.Views"
+    x:DataType="local:MainWindow_Model">
+    <Design.DataContext>
+        <local:MainWindow_Model />
+    </Design.DataContext>
+</OpenView>

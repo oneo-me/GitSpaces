@@ -7,6 +7,7 @@ using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using GitSpaces.Commands;
+using GitSpaces.Configs;
 using GitSpaces.Models;
 using GitSpaces.Native;
 using Commit = GitSpaces.Models.Commit;
@@ -194,8 +195,8 @@ public class CommitDetail : ObservableObject
         if (change.Index != ChangeState.Deleted)
         {
             var history = new MenuItem();
-            history.Header = App.Text("FileHistory");
-            history.Icon = App.CreateMenuIcon("Icons.Histories");
+            history.Header = App123.Text("FileHistory");
+            history.Icon = App123.CreateMenuIcon("Icons.Histories");
             history.Click += (_, ev) =>
             {
                 var window = new OldViews.FileHistories
@@ -207,8 +208,8 @@ public class CommitDetail : ObservableObject
             };
 
             var blame = new MenuItem();
-            blame.Header = App.Text("Blame");
-            blame.Icon = App.CreateMenuIcon("Icons.Blame");
+            blame.Header = App123.Text("Blame");
+            blame.Icon = App123.CreateMenuIcon("Icons.Blame");
             blame.Click += (o, ev) =>
             {
                 var window = new OldViews.Blame
@@ -221,8 +222,8 @@ public class CommitDetail : ObservableObject
 
             var full = Path.GetFullPath(Path.Combine(_repo, change.Path));
             var explore = new MenuItem();
-            explore.Header = App.Text("RevealFile");
-            explore.Icon = App.CreateMenuIcon("Icons.Folder.Open");
+            explore.Header = App123.Text("RevealFile");
+            explore.Icon = App123.CreateMenuIcon("Icons.Folder.Open");
             explore.IsEnabled = File.Exists(full);
             explore.Click += (_, ev) =>
             {
@@ -236,11 +237,11 @@ public class CommitDetail : ObservableObject
         }
 
         var copyPath = new MenuItem();
-        copyPath.Header = App.Text("CopyPath");
-        copyPath.Icon = App.CreateMenuIcon("Icons.Copy");
+        copyPath.Header = App123.Text("CopyPath");
+        copyPath.Icon = App123.CreateMenuIcon("Icons.Copy");
         copyPath.Click += (_, ev) =>
         {
-            App.CopyText(change.Path);
+            App123.CopyText(change.Path);
             ev.Handled = true;
         };
 
@@ -251,8 +252,8 @@ public class CommitDetail : ObservableObject
     public ContextMenu CreateRevisionFileContextMenu(Object file)
     {
         var history = new MenuItem();
-        history.Header = App.Text("FileHistory");
-        history.Icon = App.CreateMenuIcon("Icons.Histories");
+        history.Header = App123.Text("FileHistory");
+        history.Icon = App123.CreateMenuIcon("Icons.Histories");
         history.Click += (_, ev) =>
         {
             var window = new OldViews.FileHistories
@@ -264,8 +265,8 @@ public class CommitDetail : ObservableObject
         };
 
         var blame = new MenuItem();
-        blame.Header = App.Text("Blame");
-        blame.Icon = App.CreateMenuIcon("Icons.Blame");
+        blame.Header = App123.Text("Blame");
+        blame.Icon = App123.CreateMenuIcon("Icons.Blame");
         blame.Click += (o, ev) =>
         {
             var window = new OldViews.Blame
@@ -278,8 +279,8 @@ public class CommitDetail : ObservableObject
 
         var full = Path.GetFullPath(Path.Combine(_repo, file.Path));
         var explore = new MenuItem();
-        explore.Header = App.Text("RevealFile");
-        explore.Icon = App.CreateMenuIcon("Icons.Folder.Open");
+        explore.Header = App123.Text("RevealFile");
+        explore.Icon = App123.CreateMenuIcon("Icons.Folder.Open");
         explore.Click += (_, ev) =>
         {
             OS.OpenInFileManager(full, file.Type == ObjectType.Blob);
@@ -287,12 +288,12 @@ public class CommitDetail : ObservableObject
         };
 
         var saveAs = new MenuItem();
-        saveAs.Header = App.Text("SaveAs");
-        saveAs.Icon = App.CreateMenuIcon("Icons.Save");
+        saveAs.Header = App123.Text("SaveAs");
+        saveAs.Icon = App123.CreateMenuIcon("Icons.Save");
         saveAs.IsEnabled = file.Type == ObjectType.Blob;
         saveAs.Click += async (_, ev) =>
         {
-            var topLevel = App.GetTopLevel();
+            var topLevel = App123.GetTopLevel();
             if (topLevel == null) return;
 
             var options = new FolderPickerOpenOptions
@@ -310,11 +311,11 @@ public class CommitDetail : ObservableObject
         };
 
         var copyPath = new MenuItem();
-        copyPath.Header = App.Text("CopyPath");
-        copyPath.Icon = App.CreateMenuIcon("Icons.Copy");
+        copyPath.Header = App123.Text("CopyPath");
+        copyPath.Icon = App123.CreateMenuIcon("Icons.Copy");
         copyPath.Click += (_, ev) =>
         {
-            App.CopyText(file.Path);
+            App123.CopyText(file.Path);
             ev.Handled = true;
         };
 

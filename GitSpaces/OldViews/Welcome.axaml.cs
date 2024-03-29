@@ -240,12 +240,12 @@ public partial class Welcome : UserControl
             var gitDir = new QueryGitDir(root).Result();
             Dispatcher.UIThread.Invoke(() =>
             {
-                var repo = ViewModels.Preference.AddRepository(root, gitDir);
+                var repo = Configs.Preference.AddRepository(root, gitDir);
                 var node = new RepositoryNode
                 {
                     Id = repo.FullPath, Name = Path.GetFileName(repo.FullPath), Bookmark = 0, IsRepository = true
                 };
-                ViewModels.Preference.AddNode(node, parent);
+                Configs.Preference.AddNode(node, parent);
                 launcher.OpenRepositoryInTab(node, page);
             });
         });

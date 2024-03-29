@@ -12,7 +12,7 @@ public static class MergeTool
         {
             Dispatcher.UIThread.Invoke(() =>
             {
-                App.RaiseException(repo, "Invalid external merge tool settings!");
+                App123.RaiseException(repo, "Invalid external merge tool settings!");
             });
             return false;
         }
@@ -21,7 +21,7 @@ public static class MergeTool
         {
             Dispatcher.UIThread.Invoke(() =>
             {
-                App.RaiseException(repo, $"Can NOT found external merge tool in '{tool}'!");
+                App123.RaiseException(repo, $"Can NOT found external merge tool in '{tool}'!");
             });
             return false;
         }
@@ -39,7 +39,7 @@ public static class MergeTool
         {
             Dispatcher.UIThread.Invoke(() =>
             {
-                App.RaiseException(repo, "Invalid external merge tool settings!");
+                App123.RaiseException(repo, "Invalid external merge tool settings!");
             });
             return false;
         }
@@ -48,7 +48,7 @@ public static class MergeTool
         {
             Dispatcher.UIThread.Invoke(() =>
             {
-                App.RaiseException(repo, $"Can NOT found external merge tool in '{tool}'!");
+                App123.RaiseException(repo, $"Can NOT found external merge tool in '{tool}'!");
             });
             return false;
         }

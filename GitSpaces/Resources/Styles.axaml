@@ -2,7 +2,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:GitSpaces.ViewModels"
         xmlns:ae="using:AvaloniaEdit"
-        xmlns:aes="using:AvaloniaEdit.Search">
+        xmlns:aes="using:AvaloniaEdit.Search"
+        xmlns:configs="clr-namespace:GitSpaces.Configs">
     <Design.PreviewWith>
         <StackPanel Orientation="Vertical" />
     </Design.PreviewWith>
@@ -14,8 +15,8 @@
     </Style>
 
     <Style Selector="ContentPresenter">
-        <Setter Property="FontFamily" Value="{Binding Source={x:Static vm:Preference.Instance}, Path=DefaultFont}" />
-        <Setter Property="FontSize" Value="{Binding Source={x:Static vm:Preference.Instance}, Path=DefaultFontSize}" />
+        <Setter Property="FontFamily" Value="{Binding Source={x:Static configs:Preference.Instance}, Path=DefaultFont}" />
+        <Setter Property="FontSize" Value="{Binding Source={x:Static configs:Preference.Instance}, Path=DefaultFontSize}" />
     </Style>
 
     <Style Selector="Path">
@@ -68,7 +69,7 @@
         <Setter Property="FontStyle" Value="Italic" />
     </Style>
     <Style Selector="TextBlock.monospace">
-        <Setter Property="FontFamily" Value="{Binding Source={x:Static vm:Preference.Instance}, Path=MonospaceFont}" />
+        <Setter Property="FontFamily" Value="{Binding Source={x:Static configs:Preference.Instance}, Path=MonospaceFont}" />
     </Style>
     <Style Selector="TextBlock.group_header_label">
         <Setter Property="Foreground" Value="{DynamicResource Brush.FG2}" />

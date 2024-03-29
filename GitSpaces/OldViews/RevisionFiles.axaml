@@ -6,6 +6,7 @@
              xmlns:vm="using:GitSpaces.ViewModels"
              xmlns:c="using:GitSpaces.Converters"
              xmlns:oldViews="clr-namespace:GitSpaces.OldViews"
+             xmlns:configs="clr-namespace:GitSpaces.Configs"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="GitSpaces.OldViews.RevisionFiles"
              x:DataType="vm:CommitDetail">
@@ -87,7 +88,7 @@
                         </DataTemplate>
 
                         <DataTemplate DataType="m:RevisionTextFile">
-                            <oldViews:RevisionTextFileView FontFamily="{Binding Source={x:Static vm:Preference.Instance}, Path=MonospaceFont}" Background="{DynamicResource Brush.Contents}" />
+                            <oldViews:RevisionTextFileView FontFamily="{Binding Source={x:Static configs:Preference.Instance}, Path=MonospaceFont}" Background="{DynamicResource Brush.Contents}" />
                         </DataTemplate>
 
                         <DataTemplate DataType="m:RevisionImageFile">

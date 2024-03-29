@@ -63,7 +63,7 @@ public class Archive : Popup
             CallUIThread(() =>
             {
                 _repo.SetWatcherEnabled(true);
-                if (succ) App.SendNotification(_repo.FullPath, $"Save archive to : {_saveFile}");
+                if (succ) App123.SendNotification(_repo.FullPath, $"Save archive to : {_saveFile}");
             });
 
             return succ;

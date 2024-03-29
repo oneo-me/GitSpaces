@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Avalonia.Collections;
@@ -9,8 +6,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using GitSpaces.Commands;
 using GitSpaces.Models;
 using GitSpaces.Native;
+using GitSpaces.ViewModels;
 
-namespace GitSpaces.ViewModels;
+namespace GitSpaces.Configs;
 
 public class Preference : ObservableObject
 {
@@ -66,7 +64,7 @@ public class Preference : ObservableObject
         {
             if (SetProperty(ref _locale, value))
             {
-                App.SetLocale(value);
+                App123.SetLocale(value);
             }
         }
     }
@@ -78,7 +76,7 @@ public class Preference : ObservableObject
         {
             if (SetProperty(ref _theme, value))
             {
-                App.SetTheme(value);
+                App123.SetTheme(value);
             }
         }
     }

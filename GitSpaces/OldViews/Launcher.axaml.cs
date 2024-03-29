@@ -3,7 +3,9 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using GitSpaces.Models;
+using GitSpaces.Services;
 using GitSpaces.ViewModels;
+using OpenUI.Services;
 
 namespace GitSpaces.OldViews;
 
@@ -49,27 +51,19 @@ public class LauncherBody : Border
             var data = body.Data;
 
             if (data == null)
-            {
                 body.Child = null;
-            }
             else if (data is ViewModels.Welcome)
-            {
                 body.Child = new Welcome
                 {
                     DataContext = data
                 };
-            }
             else if (data is ViewModels.Repository)
-            {
                 body.Child = new Repository
                 {
                     DataContext = data
                 };
-            }
             else
-            {
                 body.Child = null;
-            }
         });
     }
 }
@@ -171,13 +165,9 @@ public partial class Launcher : Window, INotificationReceiver
     void MaximizeOrRestoreWindow(object sender, TappedEventArgs e)
     {
         if (WindowState == WindowState.Maximized)
-        {
             WindowState = WindowState.Normal;
-        }
         else
-        {
             WindowState = WindowState.Maximized;
-        }
 
         e.Handled = true;
     }
@@ -185,12 +175,8 @@ public partial class Launcher : Window, INotificationReceiver
     void CustomResizeWindow(object sender, PointerPressedEventArgs e)
     {
         if (sender is Border border)
-        {
             if (border.Tag is WindowEdge edge)
-            {
                 BeginResizeDrag(edge, e);
-            }
-        }
     }
 
     void BeginMoveWindow(object sender, PointerPressedEventArgs e)
@@ -285,9 +271,7 @@ public partial class Launcher : Window, INotificationReceiver
             var to = border.DataContext as LauncherPage;
             var moved = e.Data.Get("MovedTab") as LauncherPage;
             if (to != null && moved != null && to != moved && DataContext is ViewModels.Launcher vm)
-            {
                 vm.MoveTab(moved, to);
-            }
         }
 
         _pressedTab = false;
@@ -298,9 +282,7 @@ public partial class Launcher : Window, INotificationReceiver
     void OnPopupSure(object sender, RoutedEventArgs e)
     {
         if (DataContext is ViewModels.Launcher vm)
-        {
             vm.ActivePage.ProcessPopup();
-        }
 
         e.Handled = true;
     }
@@ -308,9 +290,7 @@ public partial class Launcher : Window, INotificationReceiver
     void OnPopupCancel(object sender, RoutedEventArgs e)
     {
         if (DataContext is ViewModels.Launcher vm)
-        {
             vm.ActivePage.CancelPopup();
-        }
 
         e.Handled = true;
     }
@@ -336,7 +316,7 @@ public partial class Launcher : Window, INotificationReceiver
 
     void Check4Update(object sender, RoutedEventArgs e)
     {
-        App.Check4Update(true);
+        _ = Service.Get<UpdateService>().CheckUpdateAsync(true);
         e.Handled = true;
     }
 

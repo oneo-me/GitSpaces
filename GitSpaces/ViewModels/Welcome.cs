@@ -1,6 +1,7 @@
 ﻿using System;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
+using GitSpaces.Configs;
 using GitSpaces.Native;
 
 namespace GitSpaces.ViewModels;
@@ -28,7 +29,7 @@ public class Welcome : ObservableObject
     {
         if (!Preference.Instance.IsGitConfigured)
         {
-            App.RaiseException(PopupHost.Active.GetId(), App.Text("NotConfigured"));
+            App123.RaiseException(PopupHost.Active.GetId(), App123.Text("NotConfigured"));
             return;
         }
 
@@ -45,7 +46,7 @@ public class Welcome : ObservableObject
 
         if (!Preference.Instance.IsGitConfigured)
         {
-            App.RaiseException(page.GetId(), App.Text("NotConfigured"));
+            App123.RaiseException(page.GetId(), App123.Text("NotConfigured"));
             return;
         }
 
@@ -59,7 +60,7 @@ public class Welcome : ObservableObject
     {
         if (!Preference.Instance.IsGitConfigured)
         {
-            App.RaiseException(PopupHost.Active.GetId(), App.Text("NotConfigured"));
+            App123.RaiseException(PopupHost.Active.GetId(), App123.Text("NotConfigured"));
         }
         else
         {

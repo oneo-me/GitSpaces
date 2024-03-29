@@ -103,7 +103,7 @@ public partial class Command
             {
                 Dispatcher.UIThread.Invoke(() =>
                 {
-                    App.RaiseException(Context, e.Message);
+                    App123.RaiseException(Context, e.Message);
                 });
             }
 
@@ -123,7 +123,7 @@ public partial class Command
             {
                 Dispatcher.UIThread.Invoke(() =>
                 {
-                    App.RaiseException(Context, string.Join("\n", errs));
+                    App123.RaiseException(Context, string.Join("\n", errs));
                 });
             }
 

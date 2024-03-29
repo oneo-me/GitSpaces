@@ -42,7 +42,7 @@ public class LauncherPage : PopupHost
 
     public void CopyPath()
     {
-        if (_node.IsRepository) App.CopyText(_node.Id);
+        if (_node.IsRepository) App123.CopyText(_node.Id);
     }
 
     public void DismissNotification(object param)

@@ -6,6 +6,7 @@ using Avalonia.Controls;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using GitSpaces.Commands;
+using GitSpaces.Configs;
 using GitSpaces.Models;
 using GitSpaces.Native;
 using Commit = GitSpaces.Models.Commit;
@@ -150,7 +151,7 @@ public class RevisionCompare : ObservableObject
         if (change.Index != ChangeState.Deleted)
         {
             var history = new MenuItem();
-            history.Header = App.Text("FileHistory");
+            history.Header = App123.Text("FileHistory");
             history.Click += (_, ev) =>
             {
                 var window = new OldViews.FileHistories
@@ -163,7 +164,7 @@ public class RevisionCompare : ObservableObject
 
             var full = Path.GetFullPath(Path.Combine(_repo, change.Path));
             var explore = new MenuItem();
-            explore.Header = App.Text("RevealFile");
+            explore.Header = App123.Text("RevealFile");
             explore.IsEnabled = File.Exists(full);
             explore.Click += (_, ev) =>
             {
@@ -176,10 +177,10 @@ public class RevisionCompare : ObservableObject
         }
 
         var copyPath = new MenuItem();
-        copyPath.Header = App.Text("CopyPath");
+        copyPath.Header = App123.Text("CopyPath");
         copyPath.Click += (_, ev) =>
         {
-            App.CopyText(change.Path);
+            App123.CopyText(change.Path);
             ev.Handled = true;
         };
 

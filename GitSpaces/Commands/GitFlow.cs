@@ -55,7 +55,7 @@ public class GitFlow : Command
             default:
                 Dispatcher.UIThread.Invoke(() =>
                 {
-                    App.RaiseException(Context, "Bad branch type!!!");
+                    App123.RaiseException(Context, "Bad branch type!!!");
                 });
                 return false;
         }
@@ -83,7 +83,7 @@ public class GitFlow : Command
             default:
                 Dispatcher.UIThread.Invoke(() =>
                 {
-                    App.RaiseException(Context, "Bad branch type!!!");
+                    App123.RaiseException(Context, "Bad branch type!!!");
                 });
                 return false;
         }

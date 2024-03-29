@@ -14,6 +14,7 @@ using GitSpaces.OldViews;
 using Branch = GitSpaces.Models.Branch;
 using Commit = GitSpaces.Models.Commit;
 using GitFlow = GitSpaces.Models.GitFlow;
+using Preference = GitSpaces.Configs.Preference;
 using Remote = GitSpaces.Models.Remote;
 using Tag = GitSpaces.Models.Tag;
 
@@ -291,7 +292,7 @@ public class Repository : ObservableObject, IRepository
 
         if (Remotes.Count == 0)
         {
-            App.RaiseException(_fullpath, "No remotes added to this repository!!!");
+            App123.RaiseException(_fullpath, "No remotes added to this repository!!!");
             return;
         }
 
@@ -304,7 +305,7 @@ public class Repository : ObservableObject, IRepository
 
         if (Remotes.Count == 0)
         {
-            App.RaiseException(_fullpath, "No remotes added to this repository!!!");
+            App123.RaiseException(_fullpath, "No remotes added to this repository!!!");
             return;
         }
 
@@ -317,11 +318,11 @@ public class Repository : ObservableObject, IRepository
 
         if (Remotes.Count == 0)
         {
-            App.RaiseException(_fullpath, "No remotes added to this repository!!!");
+            App123.RaiseException(_fullpath, "No remotes added to this repository!!!");
             return;
         }
 
-        if (Branches.Find(x => x.IsCurrent) == null) App.RaiseException(_fullpath, "Can NOT found current branch!!!");
+        if (Branches.Find(x => x.IsCurrent) == null) App123.RaiseException(_fullpath, "Can NOT found current branch!!!");
         PopupHost.ShowPopup(new Push(this, null));
     }
 
@@ -652,7 +653,7 @@ public class Repository : ObservableObject, IRepository
         var current = Branches.Find(x => x.IsCurrent);
         if (current == null)
         {
-            App.RaiseException(_fullpath, "Git do not hold any branch until you do first commit.");
+            App123.RaiseException(_fullpath, "Git do not hold any branch until you do first commit.");
             return;
         }
 
@@ -664,7 +665,7 @@ public class Repository : ObservableObject, IRepository
         var current = Branches.Find(x => x.IsCurrent);
         if (current == null)
         {
-            App.RaiseException(_fullpath, "Git do not hold any branch until you do first commit.");
+            App123.RaiseException(_fullpath, "Git do not hold any branch until you do first commit.");
             return;
         }
 
@@ -689,7 +690,7 @@ public class Repository : ObservableObject, IRepository
         if (GitFlow.IsEnabled)
         {
             var startFeature = new MenuItem();
-            startFeature.Header = App.Text("GitFlow.StartFeature");
+            startFeature.Header = App123.Text("GitFlow.StartFeature");
             startFeature.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new GitFlowStart(this, GitFlowBranchType.Feature));
@@ -697,7 +698,7 @@ public class Repository : ObservableObject, IRepository
             };
 
             var startRelease = new MenuItem();
-            startRelease.Header = App.Text("GitFlow.StartRelease");
+            startRelease.Header = App123.Text("GitFlow.StartRelease");
             startRelease.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new GitFlowStart(this, GitFlowBranchType.Release));
@@ -705,7 +706,7 @@ public class Repository : ObservableObject, IRepository
             };
 
             var startHotfix = new MenuItem();
-            startHotfix.Header = App.Text("GitFlow.StartHotfix");
+            startHotfix.Header = App123.Text("GitFlow.StartHotfix");
             startHotfix.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new GitFlowStart(this, GitFlowBranchType.Hotfix));
@@ -719,7 +720,7 @@ public class Repository : ObservableObject, IRepository
         else
         {
             var init = new MenuItem();
-            init.Header = App.Text("GitFlow.Init");
+            init.Header = App123.Text("GitFlow.Init");
             init.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new InitGitFlow(this));
@@ -737,7 +738,7 @@ public class Repository : ObservableObject, IRepository
 
         var push = new MenuItem();
         push.Header = new NameHighlightedTextBlock("BranchCM.Push", branch.Name);
-        push.Icon = App.CreateMenuIcon("Icons.Push");
+        push.Icon = App123.CreateMenuIcon("Icons.Push");
         push.IsEnabled = Remotes.Count > 0;
         push.Click += (_, e) =>
         {
@@ -748,8 +749,8 @@ public class Repository : ObservableObject, IRepository
         if (branch.IsCurrent)
         {
             var discard = new MenuItem();
-            discard.Header = App.Text("BranchCM.DiscardAll");
-            discard.Icon = App.CreateMenuIcon("Icons.Undo");
+            discard.Header = App123.Text("BranchCM.DiscardAll");
+            discard.Icon = App123.CreateMenuIcon("Icons.Undo");
             discard.IsEnabled = _workingCopy.Count > 0;
             discard.Click += (o, e) =>
             {
@@ -768,7 +769,7 @@ public class Repository : ObservableObject, IRepository
                 var upstream = branch.Upstream.Substring(13);
                 var fastForward = new MenuItem();
                 fastForward.Header = new NameHighlightedTextBlock("BranchCM.FastForward", upstream);
-                fastForward.Icon = App.CreateMenuIcon("Icons.FastForward");
+                fastForward.Icon = App123.CreateMenuIcon("Icons.FastForward");
                 fastForward.IsEnabled = !string.IsNullOrEmpty(branch.UpstreamTrackStatus) && branch.UpstreamTrackStatus.IndexOf('↑') < 0;
                 fastForward.Click += (o, e) =>
                 {
@@ -778,7 +779,7 @@ public class Repository : ObservableObject, IRepository
 
                 var pull = new MenuItem();
                 pull.Header = new NameHighlightedTextBlock("BranchCM.Pull", upstream);
-                pull.Icon = App.CreateMenuIcon("Icons.Pull");
+                pull.Icon = App123.CreateMenuIcon("Icons.Pull");
                 pull.Click += (o, e) =>
                 {
                     if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new Pull(this, null));
@@ -797,7 +798,7 @@ public class Repository : ObservableObject, IRepository
 
             var checkout = new MenuItem();
             checkout.Header = new NameHighlightedTextBlock("BranchCM.Checkout", branch.Name);
-            checkout.Icon = App.CreateMenuIcon("Icons.Check");
+            checkout.Icon = App123.CreateMenuIcon("Icons.Check");
             checkout.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowAndStartPopup(new Checkout(this, branch.Name));
@@ -810,7 +811,7 @@ public class Repository : ObservableObject, IRepository
             {
                 var fastForward = new MenuItem();
                 fastForward.Header = new NameHighlightedTextBlock("BranchCM.FastForward", $"{upstream.Remote}/{upstream.Name}");
-                fastForward.Icon = App.CreateMenuIcon("Icons.FastForward");
+                fastForward.Icon = App123.CreateMenuIcon("Icons.FastForward");
                 fastForward.IsEnabled = !string.IsNullOrEmpty(branch.UpstreamTrackStatus) && branch.UpstreamTrackStatus.IndexOf('↑') < 0;
                 fastForward.Click += (o, e) =>
                 {
@@ -833,7 +834,7 @@ public class Repository : ObservableObject, IRepository
 
             var merge = new MenuItem();
             merge.Header = new NameHighlightedTextBlock("BranchCM.Merge", branch.Name, current.Name);
-            merge.Icon = App.CreateMenuIcon("Icons.Merge");
+            merge.Icon = App123.CreateMenuIcon("Icons.Merge");
             merge.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new Merge(this, branch.Name, current.Name));
@@ -842,7 +843,7 @@ public class Repository : ObservableObject, IRepository
 
             var rebase = new MenuItem();
             rebase.Header = new NameHighlightedTextBlock("BranchCM.Rebase", current.Name, branch.Name);
-            rebase.Icon = App.CreateMenuIcon("Icons.Rebase");
+            rebase.Icon = App123.CreateMenuIcon("Icons.Rebase");
             rebase.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new Rebase(this, current, branch));
@@ -858,7 +859,7 @@ public class Repository : ObservableObject, IRepository
         {
             var finish = new MenuItem();
             finish.Header = new NameHighlightedTextBlock("BranchCM.Finish", branch.Name);
-            finish.Icon = App.CreateMenuIcon("Icons.Flow");
+            finish.Icon = App123.CreateMenuIcon("Icons.Flow");
             finish.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new GitFlowFinish(this, branch, type));
@@ -873,7 +874,7 @@ public class Repository : ObservableObject, IRepository
 
         var rename = new MenuItem();
         rename.Header = new NameHighlightedTextBlock("BranchCM.Rename", branch.Name);
-        rename.Icon = App.CreateMenuIcon("Icons.Rename");
+        rename.Icon = App123.CreateMenuIcon("Icons.Rename");
         rename.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new RenameBranch(this, branch));
@@ -882,7 +883,7 @@ public class Repository : ObservableObject, IRepository
 
         var delete = new MenuItem();
         delete.Header = new NameHighlightedTextBlock("BranchCM.Delete", branch.Name);
-        delete.Icon = App.CreateMenuIcon("Icons.Clear");
+        delete.Icon = App123.CreateMenuIcon("Icons.Clear");
         delete.IsEnabled = !branch.IsCurrent;
         delete.Click += (o, e) =>
         {
@@ -891,8 +892,8 @@ public class Repository : ObservableObject, IRepository
         };
 
         var createBranch = new MenuItem();
-        createBranch.Icon = App.CreateMenuIcon("Icons.Branch.Add");
-        createBranch.Header = App.Text("CreateBranch");
+        createBranch.Icon = App123.CreateMenuIcon("Icons.Branch.Add");
+        createBranch.Header = App123.Text("CreateBranch");
         createBranch.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new CreateBranch(this, branch));
@@ -900,8 +901,8 @@ public class Repository : ObservableObject, IRepository
         };
 
         var createTag = new MenuItem();
-        createTag.Icon = App.CreateMenuIcon("Icons.Tag.Add");
-        createTag.Header = App.Text("CreateTag");
+        createTag.Icon = App123.CreateMenuIcon("Icons.Tag.Add");
+        createTag.Header = App123.Text("CreateTag");
         createTag.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new CreateTag(this, branch));
@@ -934,15 +935,15 @@ public class Repository : ObservableObject, IRepository
         if (remoteBranches.Count > 0)
         {
             var tracking = new MenuItem();
-            tracking.Header = App.Text("BranchCM.Tracking");
-            tracking.Icon = App.CreateMenuIcon("Icons.Branch");
+            tracking.Header = App123.Text("BranchCM.Tracking");
+            tracking.Icon = App123.CreateMenuIcon("Icons.Branch");
 
             foreach (var b in remoteBranches)
             {
                 var upstream = b.FullName.Replace("refs/remotes/", "");
                 var target = new MenuItem();
                 target.Header = upstream;
-                if (branch.Upstream == b.FullName) target.Icon = App.CreateMenuIcon("Icons.Check");
+                if (branch.Upstream == b.FullName) target.Icon = App123.CreateMenuIcon("Icons.Check");
 
                 target.Click += (o, e) =>
                 {
@@ -958,7 +959,7 @@ public class Repository : ObservableObject, IRepository
             }
 
             var unsetUpstream = new MenuItem();
-            unsetUpstream.Header = App.Text("BranchCM.UnsetUpstream");
+            unsetUpstream.Header = App123.Text("BranchCM.UnsetUpstream");
             unsetUpstream.Click += (_, e) =>
             {
                 if (Commands.Branch.SetUpstream(_fullpath, branch.Name, string.Empty))
@@ -978,8 +979,8 @@ public class Repository : ObservableObject, IRepository
         }
 
         var archive = new MenuItem();
-        archive.Icon = App.CreateMenuIcon("Icons.Archive");
-        archive.Header = App.Text("Archive");
+        archive.Icon = App123.CreateMenuIcon("Icons.Archive");
+        archive.Header = App123.Text("Archive");
         archive.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new Archive(this, branch));
@@ -992,11 +993,11 @@ public class Repository : ObservableObject, IRepository
         });
 
         var copy = new MenuItem();
-        copy.Header = App.Text("BranchCM.CopyName");
-        copy.Icon = App.CreateMenuIcon("Icons.Copy");
+        copy.Header = App123.Text("BranchCM.CopyName");
+        copy.Icon = App123.CreateMenuIcon("Icons.Copy");
         copy.Click += (o, e) =>
         {
-            App.CopyText(branch.Name);
+            App123.CopyText(branch.Name);
             e.Handled = true;
         };
         menu.Items.Add(copy);
@@ -1009,8 +1010,8 @@ public class Repository : ObservableObject, IRepository
         var menu = new ContextMenu();
 
         var fetch = new MenuItem();
-        fetch.Header = App.Text("RemoteCM.Fetch");
-        fetch.Icon = App.CreateMenuIcon("Icons.Fetch");
+        fetch.Header = App123.Text("RemoteCM.Fetch");
+        fetch.Icon = App123.CreateMenuIcon("Icons.Fetch");
         fetch.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowAndStartPopup(new Fetch(this, remote));
@@ -1018,8 +1019,8 @@ public class Repository : ObservableObject, IRepository
         };
 
         var prune = new MenuItem();
-        prune.Header = App.Text("RemoteCM.Prune");
-        prune.Icon = App.CreateMenuIcon("Icons.Clear2");
+        prune.Header = App123.Text("RemoteCM.Prune");
+        prune.Icon = App123.CreateMenuIcon("Icons.Clear2");
         prune.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowAndStartPopup(new PruneRemote(this, remote));
@@ -1027,8 +1028,8 @@ public class Repository : ObservableObject, IRepository
         };
 
         var edit = new MenuItem();
-        edit.Header = App.Text("RemoteCM.Edit");
-        edit.Icon = App.CreateMenuIcon("Icons.Edit");
+        edit.Header = App123.Text("RemoteCM.Edit");
+        edit.Icon = App123.CreateMenuIcon("Icons.Edit");
         edit.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new EditRemote(this, remote));
@@ -1036,8 +1037,8 @@ public class Repository : ObservableObject, IRepository
         };
 
         var delete = new MenuItem();
-        delete.Header = App.Text("RemoteCM.Delete");
-        delete.Icon = App.CreateMenuIcon("Icons.Clear");
+        delete.Header = App123.Text("RemoteCM.Delete");
+        delete.Icon = App123.CreateMenuIcon("Icons.Clear");
         delete.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new DeleteRemote(this, remote));
@@ -1045,11 +1046,11 @@ public class Repository : ObservableObject, IRepository
         };
 
         var copy = new MenuItem();
-        copy.Header = App.Text("RemoteCM.CopyURL");
-        copy.Icon = App.CreateMenuIcon("Icons.Copy");
+        copy.Header = App123.Text("RemoteCM.CopyURL");
+        copy.Icon = App123.CreateMenuIcon("Icons.Copy");
         copy.Click += (o, e) =>
         {
-            App.CopyText(remote.URL);
+            App123.CopyText(remote.URL);
             e.Handled = true;
         };
 
@@ -1076,7 +1077,7 @@ public class Repository : ObservableObject, IRepository
 
         var checkout = new MenuItem();
         checkout.Header = new NameHighlightedTextBlock("BranchCM.Checkout", $"{branch.Remote}/{branch.Name}");
-        checkout.Icon = App.CreateMenuIcon("Icons.Check");
+        checkout.Icon = App123.CreateMenuIcon("Icons.Check");
         checkout.Click += (o, e) =>
         {
             foreach (var b in Branches)
@@ -1102,7 +1103,7 @@ public class Repository : ObservableObject, IRepository
         {
             var pull = new MenuItem();
             pull.Header = new NameHighlightedTextBlock("BranchCM.PullInto", $"{branch.Remote}/{branch.Name}", current.Name);
-            pull.Icon = App.CreateMenuIcon("Icons.Pull");
+            pull.Icon = App123.CreateMenuIcon("Icons.Pull");
             pull.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new Pull(this, branch));
@@ -1111,7 +1112,7 @@ public class Repository : ObservableObject, IRepository
 
             var merge = new MenuItem();
             merge.Header = new NameHighlightedTextBlock("BranchCM.Merge", $"{branch.Remote}/{branch.Name}", current.Name);
-            merge.Icon = App.CreateMenuIcon("Icons.Merge");
+            merge.Icon = App123.CreateMenuIcon("Icons.Merge");
             merge.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new Merge(this, $"{branch.Remote}/{branch.Name}", current.Name));
@@ -1120,7 +1121,7 @@ public class Repository : ObservableObject, IRepository
 
             var rebase = new MenuItem();
             rebase.Header = new NameHighlightedTextBlock("BranchCM.Rebase", current.Name, $"{branch.Remote}/{branch.Name}");
-            rebase.Icon = App.CreateMenuIcon("Icons.Rebase");
+            rebase.Icon = App123.CreateMenuIcon("Icons.Rebase");
             rebase.Click += (o, e) =>
             {
                 if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new Rebase(this, current, branch));
@@ -1138,7 +1139,7 @@ public class Repository : ObservableObject, IRepository
 
         var delete = new MenuItem();
         delete.Header = new NameHighlightedTextBlock("BranchCM.Delete", $"{branch.Remote}/{branch.Name}");
-        delete.Icon = App.CreateMenuIcon("Icons.Clear");
+        delete.Icon = App123.CreateMenuIcon("Icons.Clear");
         delete.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new DeleteBranch(this, branch));
@@ -1146,8 +1147,8 @@ public class Repository : ObservableObject, IRepository
         };
 
         var createBranch = new MenuItem();
-        createBranch.Icon = App.CreateMenuIcon("Icons.Branch.Add");
-        createBranch.Header = App.Text("CreateBranch");
+        createBranch.Icon = App123.CreateMenuIcon("Icons.Branch.Add");
+        createBranch.Header = App123.Text("CreateBranch");
         createBranch.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new CreateBranch(this, branch));
@@ -1155,8 +1156,8 @@ public class Repository : ObservableObject, IRepository
         };
 
         var createTag = new MenuItem();
-        createTag.Icon = App.CreateMenuIcon("Icons.Tag.Add");
-        createTag.Header = App.Text("CreateTag");
+        createTag.Icon = App123.CreateMenuIcon("Icons.Tag.Add");
+        createTag.Header = App123.Text("CreateTag");
         createTag.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new CreateTag(this, branch));
@@ -1164,8 +1165,8 @@ public class Repository : ObservableObject, IRepository
         };
 
         var archive = new MenuItem();
-        archive.Icon = App.CreateMenuIcon("Icons.Archive");
-        archive.Header = App.Text("Archive");
+        archive.Icon = App123.CreateMenuIcon("Icons.Archive");
+        archive.Header = App123.Text("Archive");
         archive.Click += (o, e) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new Archive(this, branch));
@@ -1173,11 +1174,11 @@ public class Repository : ObservableObject, IRepository
         };
 
         var copy = new MenuItem();
-        copy.Header = App.Text("BranchCM.CopyName");
-        copy.Icon = App.CreateMenuIcon("Icons.Copy");
+        copy.Header = App123.Text("BranchCM.CopyName");
+        copy.Icon = App123.CreateMenuIcon("Icons.Copy");
         copy.Click += (o, e) =>
         {
-            App.CopyText(branch.Remote + "/" + branch.Name);
+            App123.CopyText(branch.Remote + "/" + branch.Name);
             e.Handled = true;
         };
 
@@ -1204,8 +1205,8 @@ public class Repository : ObservableObject, IRepository
     public ContextMenu CreateContextMenuForTag(Tag tag)
     {
         var createBranch = new MenuItem();
-        createBranch.Icon = App.CreateMenuIcon("Icons.Branch.Add");
-        createBranch.Header = App.Text("CreateBranch");
+        createBranch.Icon = App123.CreateMenuIcon("Icons.Branch.Add");
+        createBranch.Header = App123.Text("CreateBranch");
         createBranch.Click += (o, ev) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new CreateBranch(this, tag));
@@ -1214,7 +1215,7 @@ public class Repository : ObservableObject, IRepository
 
         var pushTag = new MenuItem();
         pushTag.Header = new NameHighlightedTextBlock("TagCM.Push", tag.Name);
-        pushTag.Icon = App.CreateMenuIcon("Icons.Push");
+        pushTag.Icon = App123.CreateMenuIcon("Icons.Push");
         pushTag.IsEnabled = Remotes.Count > 0;
         pushTag.Click += (o, ev) =>
         {
@@ -1224,7 +1225,7 @@ public class Repository : ObservableObject, IRepository
 
         var deleteTag = new MenuItem();
         deleteTag.Header = new NameHighlightedTextBlock("TagCM.Delete", tag.Name);
-        deleteTag.Icon = App.CreateMenuIcon("Icons.Clear");
+        deleteTag.Icon = App123.CreateMenuIcon("Icons.Clear");
         deleteTag.Click += (o, ev) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new DeleteTag(this, tag));
@@ -1232,8 +1233,8 @@ public class Repository : ObservableObject, IRepository
         };
 
         var archive = new MenuItem();
-        archive.Icon = App.CreateMenuIcon("Icons.Archive");
-        archive.Header = App.Text("Archive");
+        archive.Icon = App123.CreateMenuIcon("Icons.Archive");
+        archive.Header = App123.Text("Archive");
         archive.Click += (o, ev) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new Archive(this, tag));
@@ -1241,11 +1242,11 @@ public class Repository : ObservableObject, IRepository
         };
 
         var copy = new MenuItem();
-        copy.Header = App.Text("TagCM.Copy");
-        copy.Icon = App.CreateMenuIcon("Icons.Copy");
+        copy.Header = App123.Text("TagCM.Copy");
+        copy.Icon = App123.CreateMenuIcon("Icons.Copy");
         copy.Click += (o, ev) =>
         {
-            App.CopyText(tag.Name);
+            App123.CopyText(tag.Name);
             ev.Handled = true;
         };
 
@@ -1273,8 +1274,8 @@ public class Repository : ObservableObject, IRepository
     public ContextMenu CreateContextMenuForSubmodule(string submodule)
     {
         var open = new MenuItem();
-        open.Header = App.Text("Submodule.Open");
-        open.Icon = App.CreateMenuIcon("Icons.Folder.Open");
+        open.Header = App123.Text("Submodule.Open");
+        open.Icon = App123.CreateMenuIcon("Icons.Folder.Open");
         open.Click += (o, ev) =>
         {
             var root = Path.GetFullPath(Path.Combine(_fullpath, submodule));
@@ -1285,7 +1286,7 @@ public class Repository : ObservableObject, IRepository
                 Id = repo.FullPath, Name = Path.GetFileName(repo.FullPath), Bookmark = 0, IsRepository = true
             };
 
-            var launcher = App.GetTopLevel().DataContext as Launcher;
+            var launcher = App123.GetTopLevel().DataContext as Launcher;
             if (launcher != null)
             {
                 launcher.OpenRepositoryInTab(node, null);
@@ -1295,17 +1296,17 @@ public class Repository : ObservableObject, IRepository
         };
 
         var copy = new MenuItem();
-        copy.Header = App.Text("Submodule.CopyPath");
-        copy.Icon = App.CreateMenuIcon("Icons.Copy");
+        copy.Header = App123.Text("Submodule.CopyPath");
+        copy.Icon = App123.CreateMenuIcon("Icons.Copy");
         copy.Click += (o, ev) =>
         {
-            App.CopyText(submodule);
+            App123.CopyText(submodule);
             ev.Handled = true;
         };
 
         var rm = new MenuItem();
-        rm.Header = App.Text("Submodule.Remove");
-        rm.Icon = App.CreateMenuIcon("Icons.Clear");
+        rm.Header = App123.Text("Submodule.Remove");
+        rm.Icon = App123.CreateMenuIcon("Icons.Clear");
         rm.Click += (o, ev) =>
         {
             if (PopupHost.CanCreatePopup()) PopupHost.ShowPopup(new DeleteSubmodule(this, submodule));

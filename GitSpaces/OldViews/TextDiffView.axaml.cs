@@ -296,11 +296,11 @@ public class CombinedTextDiffPresenter : TextEditor
         }
 
         var copy = new MenuItem();
-        copy.Header = App.Text("Copy");
-        copy.Icon = App.CreateMenuIcon("Icons.Copy");
+        copy.Header = App123.Text("Copy");
+        copy.Icon = App123.CreateMenuIcon("Icons.Copy");
         copy.Click += (o, ev) =>
         {
-            App.CopyText(SelectedText);
+            App123.CopyText(SelectedText);
             ev.Handled = true;
         };
 
@@ -688,11 +688,11 @@ public class SingleSideTextDiffPresenter : TextEditor
         }
 
         var copy = new MenuItem();
-        copy.Header = App.Text("Copy");
-        copy.Icon = App.CreateMenuIcon("Icons.Copy");
+        copy.Header = App123.Text("Copy");
+        copy.Icon = App123.CreateMenuIcon("Icons.Copy");
         copy.Click += (o, ev) =>
         {
-            App.CopyText(SelectedText);
+            App123.CopyText(SelectedText);
             ev.Handled = true;
         };
 
@@ -851,8 +851,8 @@ public partial class TextDiffView : UserControl
             if (ctx.IsUnstaged)
             {
                 var stage = new MenuItem();
-                stage.Header = App.Text("FileCM.StageSelectedLines");
-                stage.Icon = App.CreateMenuIcon("Icons.File.Add");
+                stage.Header = App123.Text("FileCM.StageSelectedLines");
+                stage.Icon = App123.CreateMenuIcon("Icons.File.Add");
                 stage.Click += (_, e) =>
                 {
                     var workcopy = workcopyView.DataContext as ViewModels.WorkingCopy;
@@ -864,8 +864,8 @@ public partial class TextDiffView : UserControl
                 };
 
                 var discard = new MenuItem();
-                discard.Header = App.Text("FileCM.DiscardSelectedLines");
-                discard.Icon = App.CreateMenuIcon("Icons.Undo");
+                discard.Header = App123.Text("FileCM.DiscardSelectedLines");
+                discard.Icon = App123.CreateMenuIcon("Icons.Undo");
                 discard.Click += (_, e) =>
                 {
                     var workcopy = workcopyView.DataContext as ViewModels.WorkingCopy;
@@ -882,8 +882,8 @@ public partial class TextDiffView : UserControl
             else
             {
                 var unstage = new MenuItem();
-                unstage.Header = App.Text("FileCM.UnstageSelectedLines");
-                unstage.Icon = App.CreateMenuIcon("Icons.File.Remove");
+                unstage.Header = App123.Text("FileCM.UnstageSelectedLines");
+                unstage.Icon = App123.CreateMenuIcon("Icons.File.Remove");
                 unstage.Click += (_, e) =>
                 {
                     var workcopy = workcopyView.DataContext as ViewModels.WorkingCopy;
@@ -895,8 +895,8 @@ public partial class TextDiffView : UserControl
                 };
 
                 var discard = new MenuItem();
-                discard.Header = App.Text("FileCM.DiscardSelectedLines");
-                discard.Icon = App.CreateMenuIcon("Icons.Undo");
+                discard.Header = App123.Text("FileCM.DiscardSelectedLines");
+                discard.Icon = App123.CreateMenuIcon("Icons.Undo");
                 discard.Click += (_, e) =>
                 {
                     var workcopy = workcopyView.DataContext as ViewModels.WorkingCopy;
@@ -919,8 +919,8 @@ public partial class TextDiffView : UserControl
             if (ctx.IsUnstaged)
             {
                 var stage = new MenuItem();
-                stage.Header = App.Text("FileCM.StageSelectedLines");
-                stage.Icon = App.CreateMenuIcon("Icons.File.Add");
+                stage.Header = App123.Text("FileCM.StageSelectedLines");
+                stage.Icon = App123.CreateMenuIcon("Icons.File.Add");
                 stage.Click += (_, e) =>
                 {
                     var repo = repoView.DataContext as ViewModels.Repository;
@@ -951,8 +951,8 @@ public partial class TextDiffView : UserControl
                 };
 
                 var discard = new MenuItem();
-                discard.Header = App.Text("FileCM.DiscardSelectedLines");
-                discard.Icon = App.CreateMenuIcon("Icons.Undo");
+                discard.Header = App123.Text("FileCM.DiscardSelectedLines");
+                discard.Icon = App123.CreateMenuIcon("Icons.Undo");
                 discard.Click += (_, e) =>
                 {
                     var repo = repoView.DataContext as ViewModels.Repository;
@@ -988,8 +988,8 @@ public partial class TextDiffView : UserControl
             else
             {
                 var unstage = new MenuItem();
-                unstage.Header = App.Text("FileCM.UnstageSelectedLines");
-                unstage.Icon = App.CreateMenuIcon("Icons.File.Remove");
+                unstage.Header = App123.Text("FileCM.UnstageSelectedLines");
+                unstage.Icon = App123.CreateMenuIcon("Icons.File.Remove");
                 unstage.Click += (_, e) =>
                 {
                     var repo = repoView.DataContext as ViewModels.Repository;
@@ -1019,8 +1019,8 @@ public partial class TextDiffView : UserControl
                 };
 
                 var discard = new MenuItem();
-                discard.Header = App.Text("FileCM.DiscardSelectedLines");
-                discard.Icon = App.CreateMenuIcon("Icons.Undo");
+                discard.Header = App123.Text("FileCM.DiscardSelectedLines");
+                discard.Icon = App123.CreateMenuIcon("Icons.Undo");
                 discard.Click += (_, e) =>
                 {
                     var repo = repoView.DataContext as ViewModels.Repository;

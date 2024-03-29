@@ -32,7 +32,7 @@ public partial class Preference : Window
 
     public Preference()
     {
-        var pref = ViewModels.Preference.Instance;
+        var pref = Configs.Preference.Instance;
         DataContext = pref;
 
         var builtInMono = new FontFamily("fonts:GitSpaces#JetBrains Mono");
@@ -145,7 +145,7 @@ public partial class Preference : Window
         var selected = await StorageProvider.OpenFilePickerAsync(options);
         if (selected.Count == 1)
         {
-            ViewModels.Preference.Instance.GitInstallPath = selected[0].Path.LocalPath;
+            Configs.Preference.Instance.GitInstallPath = selected[0].Path.LocalPath;
             txtVersion.Text = new Version().Query();
         }
 
@@ -161,7 +161,7 @@ public partial class Preference : Window
         var selected = await StorageProvider.OpenFolderPickerAsync(options);
         if (selected.Count == 1)
         {
-            ViewModels.Preference.Instance.GitDefaultCloneDir = selected[0].Path.LocalPath;
+            Configs.Preference.Instance.GitDefaultCloneDir = selected[0].Path.LocalPath;
         }
     }
 
@@ -189,10 +189,10 @@ public partial class Preference : Window
 
     async void SelectExternalMergeTool(object sender, RoutedEventArgs e)
     {
-        var type = ViewModels.Preference.Instance.ExternalMergeToolType;
+        var type = Configs.Preference.Instance.ExternalMergeToolType;
         if (type < 0 || type >= ExternalMergeTools.Supported.Count)
         {
-            ViewModels.Preference.Instance.ExternalMergeToolType = 0;
+            Configs.Preference.Instance.ExternalMergeToolType = 0;
             type = 0;
         }
 
@@ -213,7 +213,7 @@ public partial class Preference : Window
         var selected = await StorageProvider.OpenFilePickerAsync(options);
         if (selected.Count == 1)
         {
-            ViewModels.Preference.Instance.ExternalMergeToolPath = selected[0].Path.LocalPath;
+            Configs.Preference.Instance.ExternalMergeToolPath = selected[0].Path.LocalPath;
         }
     }
 }

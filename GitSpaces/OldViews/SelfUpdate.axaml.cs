@@ -33,7 +33,7 @@ public partial class SelfUpdate : Window
     {
         var button = sender as Button;
         var ver = button.DataContext as Version;
-        ViewModels.Preference.Instance.IgnoreUpdateTag = ver.TagName;
+        Configs.Preference.Instance.IgnoreUpdateTag = ver.TagName;
         Close();
         e.Handled = true;
     }

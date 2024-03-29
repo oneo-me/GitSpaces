@@ -5,6 +5,7 @@
              xmlns:c="using:GitSpaces.Converters"
              xmlns:vm="using:GitSpaces.ViewModels"
              xmlns:v="clr-namespace:GitSpaces.OldViews"
+             xmlns:configs="clr-namespace:GitSpaces.Configs"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="GitSpaces.OldViews.Welcome"
              x:DataType="vm:Welcome">
@@ -147,7 +148,7 @@
                    Classes="italic"
                    Margin="0,0,8,0"
                    HorizontalAlignment="Center" VerticalAlignment="Center"
-                   FontSize="{Binding Source={x:Static vm:Preference.Instance}, Path=DefaultFontSize, Converter={x:Static c:FontSizeModifyConverters.Decrease}}"
+                   FontSize="{Binding Source={x:Static configs:Preference.Instance}, Path=DefaultFontSize, Converter={x:Static c:FontSizeModifyConverters.Decrease}}"
                    Text="{DynamicResource Text.Welcome.DragDropTip}"
                    Foreground="{DynamicResource Brush.FG2}" />
     </Grid>

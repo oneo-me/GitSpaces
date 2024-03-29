@@ -35,7 +35,7 @@ public partial class WorkingCopy : UserControl
         if (vm == null) return;
 
         var selected = new List<Change>();
-        switch (ViewModels.Preference.Instance.UnstagedChangeViewMode)
+        switch (Configs.Preference.Instance.UnstagedChangeViewMode)
         {
             case ChangeViewMode.List:
                 foreach (var item in unstagedList.SelectedItems)
@@ -81,7 +81,7 @@ public partial class WorkingCopy : UserControl
         if (vm == null) return;
 
         var selected = new List<Change>();
-        switch (ViewModels.Preference.Instance.StagedChangeViewMode)
+        switch (Configs.Preference.Instance.StagedChangeViewMode)
         {
             case ChangeViewMode.List:
                 foreach (var item in stagedList.SelectedItems)
@@ -270,7 +270,7 @@ public partial class WorkingCopy : UserControl
             var commits = new QueryCommits(repo, "-n 1", false).Result();
             if (commits.Count == 0)
             {
-                App.RaiseException(repo, "No commits to amend!!!");
+                App123.RaiseException(repo, "No commits to amend!!!");
 
                 var chkBox = sender as CheckBox;
                 chkBox.IsChecked = false;

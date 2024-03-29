@@ -55,7 +55,7 @@ public static class StringConverters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var key = parameter as string;
-            return App.Text(key, value);
+            return App123.Text(key, value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

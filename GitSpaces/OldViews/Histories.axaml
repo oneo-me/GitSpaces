@@ -6,11 +6,12 @@
              xmlns:vm="using:GitSpaces.ViewModels"
              xmlns:c="using:GitSpaces.Converters"
              xmlns:oldViews="clr-namespace:GitSpaces.OldViews"
+             xmlns:configs="clr-namespace:GitSpaces.Configs"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="GitSpaces.OldViews.Histories"
              x:DataType="vm:Histories">
     <oldViews:LayoutableGrid RowDefinitions="*,3,*" ColumnDefinitions="*,3,*"
-                      UseHorizontal="{Binding Source={x:Static vm:Preference.Instance}, Path=UseTwoColumnsLayoutInHistories}">
+                      UseHorizontal="{Binding Source={x:Static configs:Preference.Instance}, Path=UseTwoColumnsLayoutInHistories}">
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
             <DataGrid x:Name="commitDataGrid"
                       Background="{DynamicResource Brush.Contents}"

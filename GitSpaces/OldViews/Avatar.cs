@@ -53,7 +53,7 @@ public class Avatar : Control, IAvatarHost
     {
         var refetch = new MenuItem
         {
-            Header = App.Text("RefetchAvatar")
+            Header = App123.Text("RefetchAvatar")
         };
         refetch.Click += (o, e) =>
         {

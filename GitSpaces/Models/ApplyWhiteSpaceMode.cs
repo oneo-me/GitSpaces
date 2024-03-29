@@ -8,8 +8,8 @@ public class ApplyWhiteSpaceMode
 
     public ApplyWhiteSpaceMode(string n, string d, string a)
     {
-        Name = App.Text(n);
-        Desc = App.Text(d);
+        Name = App123.Text(n);
+        Desc = App123.Text(d);
         Arg = a;
     }
 }

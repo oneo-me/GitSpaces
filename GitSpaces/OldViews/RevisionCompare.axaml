@@ -5,6 +5,7 @@
              xmlns:vm="using:GitSpaces.ViewModels"
              xmlns:c="using:GitSpaces.Converters"
              xmlns:oldViews="clr-namespace:GitSpaces.OldViews"
+             xmlns:configs="clr-namespace:GitSpaces.Configs"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="GitSpaces.OldViews.RevisionCompare"
              x:DataType="vm:RevisionCompare"
@@ -78,7 +79,7 @@
                     <oldViews:ChangeViewModeSwitcher Grid.Column="1"
                                               Width="18" Height="18"
                                               HorizontalAlignment="Right"
-                                              ViewMode="{Binding Source={x:Static vm:Preference.Instance}, Path=CommitChangeViewMode, Mode=TwoWay}" />
+                                              ViewMode="{Binding Source={x:Static configs:Preference.Instance}, Path=CommitChangeViewMode, Mode=TwoWay}" />
                 </Grid>
 
                 <!-- Changes -->
@@ -99,7 +100,7 @@
                                   VerticalScrollBarVisibility="Auto"
                                   SelectionChanged="OnDataGridSelectionChanged"
                                   ContextRequested="OnDataGridContextRequested"
-                                  IsVisible="{Binding Source={x:Static vm:Preference.Instance}, Path=CommitChangeViewMode, Converter={x:Static c:ChangeViewModeConverters.IsList}}">
+                                  IsVisible="{Binding Source={x:Static configs:Preference.Instance}, Path=CommitChangeViewMode, Converter={x:Static c:ChangeViewModeConverters.IsList}}">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="ICON">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -134,7 +135,7 @@
                                   VerticalScrollBarVisibility="Auto"
                                   SelectionChanged="OnDataGridSelectionChanged"
                                   ContextRequested="OnDataGridContextRequested"
-                                  IsVisible="{Binding Source={x:Static vm:Preference.Instance}, Path=CommitChangeViewMode, Converter={x:Static c:ChangeViewModeConverters.IsGrid}}">
+                                  IsVisible="{Binding Source={x:Static configs:Preference.Instance}, Path=CommitChangeViewMode, Converter={x:Static c:ChangeViewModeConverters.IsGrid}}">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="ICON">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -168,7 +169,7 @@
                                   ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                                   ContextRequested="OnTreeViewContextRequested"
-                                  IsVisible="{Binding Source={x:Static vm:Preference.Instance}, Path=CommitChangeViewMode, Converter={x:Static c:ChangeViewModeConverters.IsTree}}">
+                                  IsVisible="{Binding Source={x:Static configs:Preference.Instance}, Path=CommitChangeViewMode, Converter={x:Static c:ChangeViewModeConverters.IsTree}}">
                             <TreeView.Styles>
                                 <Style Selector="TreeViewItem" x:DataType="vm:FileTreeNode">
                                     <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />

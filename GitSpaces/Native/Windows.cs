@@ -159,7 +159,7 @@ class Windows : OS.IBackend
         var bash = Path.Combine(Path.GetDirectoryName(OS.GitInstallPath), "bash.exe");
         if (!File.Exists(bash))
         {
-            App.RaiseException(string.IsNullOrEmpty(workdir) ? "" : workdir, $"Can NOT found bash.exe under '{Path.GetDirectoryName(OS.GitInstallPath)}'");
+            App123.RaiseException(string.IsNullOrEmpty(workdir) ? "" : workdir, $"Can NOT found bash.exe under '{Path.GetDirectoryName(OS.GitInstallPath)}'");
             return;
         }
 

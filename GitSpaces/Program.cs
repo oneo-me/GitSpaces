@@ -32,10 +32,6 @@ static class Program
 
     static AppBuilder BuildAvaloniaApp()
     {
-        var builder = DesktopApp.Build<App>();
-
-        OS.SetupApp(builder);
-
-        return builder;
+        return DesktopApp.Build<App>();
     }
 }

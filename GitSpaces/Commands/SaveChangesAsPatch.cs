@@ -52,7 +52,7 @@ public static class SaveChangesAsPatch
         {
             Dispatcher.UIThread.Invoke(() =>
             {
-                App.RaiseException(repo, "Save change to patch failed: " + e.Message);
+                App123.RaiseException(repo, "Save change to patch failed: " + e.Message);
             });
             return false;
         }

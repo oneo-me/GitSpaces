@@ -74,7 +74,7 @@ public static class SaveRevisionFile
             {
                 Dispatcher.UIThread.Invoke(() =>
                 {
-                    App.RaiseException(repo, "Save file failed: " + e.Message);
+                    App123.RaiseException(repo, "Save file failed: " + e.Message);
                 });
                 return false;
             }

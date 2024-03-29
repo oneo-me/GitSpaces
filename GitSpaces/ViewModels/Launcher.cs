@@ -2,6 +2,7 @@
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using GitSpaces.Commands;
+using GitSpaces.Configs;
 using GC = System.GC;
 
 namespace GitSpaces.ViewModels;
@@ -89,7 +90,7 @@ public class Launcher : ObservableObject
     {
         if (Pages.Count == 1)
         {
-            App.Quit();
+            App123.Quit();
             return;
         }
 
@@ -187,7 +188,7 @@ public class Launcher : ObservableObject
         if (repo == null || !Path.Exists(repo.FullPath))
         {
             var ctx = page == null ? ActivePage.Node.Id : page.Node.Id;
-            App.RaiseException(ctx, "Repository does NOT exists any more. Please remove it.");
+            App123.RaiseException(ctx, "Repository does NOT exists any more. Please remove it.");
             return;
         }
 

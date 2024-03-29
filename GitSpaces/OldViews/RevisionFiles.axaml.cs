@@ -185,11 +185,11 @@ public class RevisionTextFileView : TextEditor
         icon.Data = Application.Current?.FindResource("Icons.Copy") as StreamGeometry;
 
         var copy = new MenuItem();
-        copy.Header = App.Text("Copy");
+        copy.Header = App123.Text("Copy");
         copy.Icon = icon;
         copy.Click += (o, ev) =>
         {
-            App.CopyText(selected);
+            App123.CopyText(selected);
             ev.Handled = true;
         };
 

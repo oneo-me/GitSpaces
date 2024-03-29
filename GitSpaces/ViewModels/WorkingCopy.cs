@@ -8,6 +8,7 @@ using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using GitSpaces.Commands;
+using GitSpaces.Configs;
 using GitSpaces.Models;
 using GitSpaces.Native;
 using Commit = GitSpaces.Commands.Commit;
@@ -423,7 +424,7 @@ public class WorkingCopy : ObservableObject
             var tool = ExternalMergeTools.Supported.Find(x => x.Type == type);
             if (tool == null)
             {
-                App.RaiseException(_repo.FullPath, "Invalid merge tool in preference setting!");
+                App123.RaiseException(_repo.FullPath, "Invalid merge tool in preference setting!");
                 return;
             }
 
@@ -439,19 +440,19 @@ public class WorkingCopy : ObservableObject
     {
         if (!PopupHost.CanCreatePopup())
         {
-            App.RaiseException(_repo.FullPath, "Repository has unfinished job! Please wait!");
+            App123.RaiseException(_repo.FullPath, "Repository has unfinished job! Please wait!");
             return;
         }
 
         if (_staged.Count == 0)
         {
-            App.RaiseException(_repo.FullPath, "No files added to commit!");
+            App123.RaiseException(_repo.FullPath, "No files added to commit!");
             return;
         }
 
         if (string.IsNullOrWhiteSpace(_commitMessage))
         {
-            App.RaiseException(_repo.FullPath, "Commit without message is NOT allowed!");
+            App123.RaiseException(_repo.FullPath, "Commit without message is NOT allowed!");
             return;
         }
 
@@ -488,8 +489,8 @@ public class WorkingCopy : ObservableObject
             var path = Path.GetFullPath(Path.Combine(_repo.FullPath, change.Path));
 
             var explore = new MenuItem();
-            explore.Header = App.Text("RevealFile");
-            explore.Icon = App.CreateMenuIcon("Icons.Folder.Open");
+            explore.Header = App123.Text("RevealFile");
+            explore.Icon = App123.CreateMenuIcon("Icons.Folder.Open");
             explore.IsEnabled = File.Exists(path) || Directory.Exists(path);
             explore.Click += (_, e) =>
             {
@@ -498,8 +499,8 @@ public class WorkingCopy : ObservableObject
             };
 
             var openWith = new MenuItem();
-            openWith.Header = App.Text("OpenWith");
-            openWith.Icon = App.CreateMenuIcon("Icons.OpenWith");
+            openWith.Header = App123.Text("OpenWith");
+            openWith.Icon = App123.CreateMenuIcon("Icons.OpenWith");
             openWith.IsEnabled = File.Exists(path);
             openWith.Click += (_, e) =>
             {
@@ -508,8 +509,8 @@ public class WorkingCopy : ObservableObject
             };
 
             var stage = new MenuItem();
-            stage.Header = App.Text("FileCM.Stage");
-            stage.Icon = App.CreateMenuIcon("Icons.File.Add");
+            stage.Header = App123.Text("FileCM.Stage");
+            stage.Icon = App123.CreateMenuIcon("Icons.File.Add");
             stage.Click += (_, e) =>
             {
                 StageChanges(changes);
@@ -517,8 +518,8 @@ public class WorkingCopy : ObservableObject
             };
 
             var discard = new MenuItem();
-            discard.Header = App.Text("FileCM.Discard");
-            discard.Icon = App.CreateMenuIcon("Icons.Undo");
+            discard.Header = App123.Text("FileCM.Discard");
+            discard.Icon = App123.CreateMenuIcon("Icons.Undo");
             discard.Click += (_, e) =>
             {
                 Discard(changes, true);
@@ -526,8 +527,8 @@ public class WorkingCopy : ObservableObject
             };
 
             var stash = new MenuItem();
-            stash.Header = App.Text("FileCM.Stash");
-            stash.Icon = App.CreateMenuIcon("Icons.Stashes");
+            stash.Header = App123.Text("FileCM.Stash");
+            stash.Icon = App123.CreateMenuIcon("Icons.Stashes");
             stash.Click += (_, e) =>
             {
                 if (PopupHost.CanCreatePopup())
@@ -539,15 +540,15 @@ public class WorkingCopy : ObservableObject
             };
 
             var patch = new MenuItem();
-            patch.Header = App.Text("FileCM.SaveAsPatch");
-            patch.Icon = App.CreateMenuIcon("Icons.Diff");
+            patch.Header = App123.Text("FileCM.SaveAsPatch");
+            patch.Icon = App123.CreateMenuIcon("Icons.Diff");
             patch.Click += async (_, e) =>
             {
-                var topLevel = App.GetTopLevel();
+                var topLevel = App123.GetTopLevel();
                 if (topLevel == null) return;
 
                 var options = new FilePickerSaveOptions();
-                options.Title = App.Text("FileCM.SaveAsPatch");
+                options.Title = App123.Text("FileCM.SaveAsPatch");
                 options.DefaultExtension = ".patch";
                 options.FileTypeChoices =
                 [
@@ -561,15 +562,15 @@ public class WorkingCopy : ObservableObject
                 if (storageFile != null)
                 {
                     var succ = await Task.Run(() => SaveChangesAsPatch.Exec(_repo.FullPath, changes, true, storageFile.Path.LocalPath));
-                    if (succ) App.SendNotification(_repo.FullPath, App.Text("SaveAsPatchSuccess"));
+                    if (succ) App123.SendNotification(_repo.FullPath, App123.Text("SaveAsPatchSuccess"));
                 }
 
                 e.Handled = true;
             };
 
             var history = new MenuItem();
-            history.Header = App.Text("FileHistory");
-            history.Icon = App.CreateMenuIcon("Icons.Histories");
+            history.Header = App123.Text("FileHistory");
+            history.Icon = App123.CreateMenuIcon("Icons.Histories");
             history.Click += (_, e) =>
             {
                 var window = new OldViews.FileHistories
@@ -581,8 +582,8 @@ public class WorkingCopy : ObservableObject
             };
 
             var assumeUnchanged = new MenuItem();
-            assumeUnchanged.Header = App.Text("FileCM.AssumeUnchanged");
-            assumeUnchanged.Icon = App.CreateMenuIcon("Icons.File.Ignore");
+            assumeUnchanged.Header = App123.Text("FileCM.AssumeUnchanged");
+            assumeUnchanged.Icon = App123.CreateMenuIcon("Icons.File.Ignore");
             assumeUnchanged.IsEnabled = change.WorkTree != ChangeState.Untracked;
             assumeUnchanged.Click += (_, e) =>
             {
@@ -591,11 +592,11 @@ public class WorkingCopy : ObservableObject
             };
 
             var copy = new MenuItem();
-            copy.Header = App.Text("CopyPath");
-            copy.Icon = App.CreateMenuIcon("Icons.Copy");
+            copy.Header = App123.Text("CopyPath");
+            copy.Icon = App123.CreateMenuIcon("Icons.Copy");
             copy.Click += (_, e) =>
             {
-                App.CopyText(change.Path);
+                App123.CopyText(change.Path);
                 e.Handled = true;
             };
 
@@ -624,8 +625,8 @@ public class WorkingCopy : ObservableObject
         else
         {
             var stage = new MenuItem();
-            stage.Header = App.Text("FileCM.StageMulti", changes.Count);
-            stage.Icon = App.CreateMenuIcon("Icons.File.Add");
+            stage.Header = App123.Text("FileCM.StageMulti", changes.Count);
+            stage.Icon = App123.CreateMenuIcon("Icons.File.Add");
             stage.Click += (_, e) =>
             {
                 StageChanges(changes);
@@ -633,8 +634,8 @@ public class WorkingCopy : ObservableObject
             };
 
             var discard = new MenuItem();
-            discard.Header = App.Text("FileCM.DiscardMulti", changes.Count);
-            discard.Icon = App.CreateMenuIcon("Icons.Undo");
+            discard.Header = App123.Text("FileCM.DiscardMulti", changes.Count);
+            discard.Icon = App123.CreateMenuIcon("Icons.Undo");
             discard.Click += (_, e) =>
             {
                 Discard(changes, true);
@@ -642,8 +643,8 @@ public class WorkingCopy : ObservableObject
             };
 
             var stash = new MenuItem();
-            stash.Header = App.Text("FileCM.StashMulti", changes.Count);
-            stash.Icon = App.CreateMenuIcon("Icons.Stashes");
+            stash.Header = App123.Text("FileCM.StashMulti", changes.Count);
+            stash.Icon = App123.CreateMenuIcon("Icons.Stashes");
             stash.Click += (_, e) =>
             {
                 if (PopupHost.CanCreatePopup())
@@ -655,15 +656,15 @@ public class WorkingCopy : ObservableObject
             };
 
             var patch = new MenuItem();
-            patch.Header = App.Text("FileCM.SaveAsPatch");
-            patch.Icon = App.CreateMenuIcon("Icons.Diff");
+            patch.Header = App123.Text("FileCM.SaveAsPatch");
+            patch.Icon = App123.CreateMenuIcon("Icons.Diff");
             patch.Click += async (o, e) =>
             {
-                var topLevel = App.GetTopLevel();
+                var topLevel = App123.GetTopLevel();
                 if (topLevel == null) return;
 
                 var options = new FilePickerSaveOptions();
-                options.Title = App.Text("FileCM.SaveAsPatch");
+                options.Title = App123.Text("FileCM.SaveAsPatch");
                 options.DefaultExtension = ".patch";
                 options.FileTypeChoices =
                 [
@@ -677,7 +678,7 @@ public class WorkingCopy : ObservableObject
                 if (storageFile != null)
                 {
                     var succ = await Task.Run(() => SaveChangesAsPatch.Exec(_repo.FullPath, changes, true, storageFile.Path.LocalPath));
-                    if (succ) App.SendNotification(_repo.FullPath, App.Text("SaveAsPatchSuccess"));
+                    if (succ) App123.SendNotification(_repo.FullPath, App123.Text("SaveAsPatchSuccess"));
                 }
 
                 e.Handled = true;
@@ -704,8 +705,8 @@ public class WorkingCopy : ObservableObject
 
             var explore = new MenuItem();
             explore.IsEnabled = File.Exists(path) || Directory.Exists(path);
-            explore.Header = App.Text("RevealFile");
-            explore.Icon = App.CreateMenuIcon("Icons.Folder.Open");
+            explore.Header = App123.Text("RevealFile");
+            explore.Icon = App123.CreateMenuIcon("Icons.Folder.Open");
             explore.Click += (o, e) =>
             {
                 OS.OpenInFileManager(path, true);
@@ -713,8 +714,8 @@ public class WorkingCopy : ObservableObject
             };
 
             var openWith = new MenuItem();
-            openWith.Header = App.Text("OpenWith");
-            openWith.Icon = App.CreateMenuIcon("Icons.OpenWith");
+            openWith.Header = App123.Text("OpenWith");
+            openWith.Icon = App123.CreateMenuIcon("Icons.OpenWith");
             openWith.IsEnabled = File.Exists(path);
             openWith.Click += (_, e) =>
             {
@@ -723,8 +724,8 @@ public class WorkingCopy : ObservableObject
             };
 
             var unstage = new MenuItem();
-            unstage.Header = App.Text("FileCM.Unstage");
-            unstage.Icon = App.CreateMenuIcon("Icons.File.Remove");
+            unstage.Header = App123.Text("FileCM.Unstage");
+            unstage.Icon = App123.CreateMenuIcon("Icons.File.Remove");
             unstage.Click += (o, e) =>
             {
                 UnstageChanges(changes);
@@ -732,8 +733,8 @@ public class WorkingCopy : ObservableObject
             };
 
             var discard = new MenuItem();
-            discard.Header = App.Text("FileCM.Discard");
-            discard.Icon = App.CreateMenuIcon("Icons.Undo");
+            discard.Header = App123.Text("FileCM.Discard");
+            discard.Icon = App123.CreateMenuIcon("Icons.Undo");
             discard.Click += (_, e) =>
             {
                 Discard(changes, false);
@@ -741,8 +742,8 @@ public class WorkingCopy : ObservableObject
             };
 
             var stash = new MenuItem();
-            stash.Header = App.Text("FileCM.Stash");
-            stash.Icon = App.CreateMenuIcon("Icons.Stashes");
+            stash.Header = App123.Text("FileCM.Stash");
+            stash.Icon = App123.CreateMenuIcon("Icons.Stashes");
             stash.Click += (_, e) =>
             {
                 if (PopupHost.CanCreatePopup())
@@ -754,15 +755,15 @@ public class WorkingCopy : ObservableObject
             };
 
             var patch = new MenuItem();
-            patch.Header = App.Text("FileCM.SaveAsPatch");
-            patch.Icon = App.CreateMenuIcon("Icons.Diff");
+            patch.Header = App123.Text("FileCM.SaveAsPatch");
+            patch.Icon = App123.CreateMenuIcon("Icons.Diff");
             patch.Click += async (o, e) =>
             {
-                var topLevel = App.GetTopLevel();
+                var topLevel = App123.GetTopLevel();
                 if (topLevel == null) return;
 
                 var options = new FilePickerSaveOptions();
-                options.Title = App.Text("FileCM.SaveAsPatch");
+                options.Title = App123.Text("FileCM.SaveAsPatch");
                 options.DefaultExtension = ".patch";
                 options.FileTypeChoices =
                 [
@@ -776,18 +777,18 @@ public class WorkingCopy : ObservableObject
                 if (storageFile != null)
                 {
                     var succ = await Task.Run(() => SaveChangesAsPatch.Exec(_repo.FullPath, changes, false, storageFile.Path.LocalPath));
-                    if (succ) App.SendNotification(_repo.FullPath, App.Text("SaveAsPatchSuccess"));
+                    if (succ) App123.SendNotification(_repo.FullPath, App123.Text("SaveAsPatchSuccess"));
                 }
 
                 e.Handled = true;
             };
 
             var copyPath = new MenuItem();
-            copyPath.Header = App.Text("CopyPath");
-            copyPath.Icon = App.CreateMenuIcon("Icons.Copy");
+            copyPath.Header = App123.Text("CopyPath");
+            copyPath.Icon = App123.CreateMenuIcon("Icons.Copy");
             copyPath.Click += (o, e) =>
             {
-                App.CopyText(change.Path);
+                App123.CopyText(change.Path);
                 e.Handled = true;
             };
 
@@ -810,8 +811,8 @@ public class WorkingCopy : ObservableObject
         else
         {
             var unstage = new MenuItem();
-            unstage.Header = App.Text("FileCM.UnstageMulti", changes.Count);
-            unstage.Icon = App.CreateMenuIcon("Icons.File.Remove");
+            unstage.Header = App123.Text("FileCM.UnstageMulti", changes.Count);
+            unstage.Icon = App123.CreateMenuIcon("Icons.File.Remove");
             unstage.Click += (o, e) =>
             {
                 UnstageChanges(changes);
@@ -819,8 +820,8 @@ public class WorkingCopy : ObservableObject
             };
 
             var discard = new MenuItem();
-            discard.Header = App.Text("FileCM.DiscardMulti", changes.Count);
-            discard.Icon = App.CreateMenuIcon("Icons.Undo");
+            discard.Header = App123.Text("FileCM.DiscardMulti", changes.Count);
+            discard.Icon = App123.CreateMenuIcon("Icons.Undo");
             discard.Click += (_, e) =>
             {
                 Discard(changes, false);
@@ -828,8 +829,8 @@ public class WorkingCopy : ObservableObject
             };
 
             var stash = new MenuItem();
-            stash.Header = App.Text("FileCM.StashMulti", changes.Count);
-            stash.Icon = App.CreateMenuIcon("Icons.Stashes");
+            stash.Header = App123.Text("FileCM.StashMulti", changes.Count);
+            stash.Icon = App123.CreateMenuIcon("Icons.Stashes");
             stash.Click += (_, e) =>
             {
                 if (PopupHost.CanCreatePopup())
@@ -841,15 +842,15 @@ public class WorkingCopy : ObservableObject
             };
 
             var patch = new MenuItem();
-            patch.Header = App.Text("FileCM.SaveAsPatch");
-            patch.Icon = App.CreateMenuIcon("Icons.Diff");
+            patch.Header = App123.Text("FileCM.SaveAsPatch");
+            patch.Icon = App123.CreateMenuIcon("Icons.Diff");
             patch.Click += async (_, e) =>
             {
-                var topLevel = App.GetTopLevel();
+                var topLevel = App123.GetTopLevel();
                 if (topLevel == null) return;
 
                 var options = new FilePickerSaveOptions();
-                options.Title = App.Text("FileCM.SaveAsPatch");
+                options.Title = App123.Text("FileCM.SaveAsPatch");
                 options.DefaultExtension = ".patch";
                 options.FileTypeChoices =
                 [
@@ -863,7 +864,7 @@ public class WorkingCopy : ObservableObject
                 if (storageFile != null)
                 {
                     var succ = await Task.Run(() => SaveChangesAsPatch.Exec(_repo.FullPath, changes, false, storageFile.Path.LocalPath));
-                    if (succ) App.SendNotification(_repo.FullPath, App.Text("SaveAsPatchSuccess"));
+                    if (succ) App123.SendNotification(_repo.FullPath, App123.Text("SaveAsPatchSuccess"));
                 }
 
                 e.Handled = true;
@@ -884,14 +885,14 @@ public class WorkingCopy : ObservableObject
         if (_repo.CommitMessages.Count == 0)
         {
             var empty = new MenuItem();
-            empty.Header = App.Text("WorkingCopy.NoCommitHistories");
+            empty.Header = App123.Text("WorkingCopy.NoCommitHistories");
             empty.IsEnabled = false;
             menu.Items.Add(empty);
             return menu;
         }
 
         var tip = new MenuItem();
-        tip.Header = App.Text("WorkingCopy.HasCommitHistories");
+        tip.Header = App123.Text("WorkingCopy.HasCommitHistories");
         tip.IsEnabled = false;
         menu.Items.Add(tip);
         menu.Items.Add(new MenuItem

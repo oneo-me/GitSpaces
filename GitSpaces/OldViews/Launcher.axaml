@@ -6,6 +6,7 @@
         xmlns:m="using:GitSpaces.Models"
         xmlns:c="using:GitSpaces.Converters"
         xmlns:oldViews="clr-namespace:GitSpaces.OldViews"
+        xmlns:configs="clr-namespace:GitSpaces.Configs"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="GitSpaces.OldViews.Launcher"
         x:DataType="vm:Launcher"
@@ -158,7 +159,7 @@
                                             </ContextMenu>
                                         </Border.ContextMenu>
 
-                                        <oldViews:LauncherTab UseFixedTabWidth="{Binding Source={x:Static vm:Preference.Instance}, Path=UseFixedTabWidth}" Height="30" ColumnDefinitions="Auto,*,Auto" VerticalAlignment="Center">
+                                        <oldViews:LauncherTab UseFixedTabWidth="{Binding Source={x:Static configs:Preference.Instance}, Path=UseFixedTabWidth}" Height="30" ColumnDefinitions="Auto,*,Auto" VerticalAlignment="Center">
                                             <Path Grid.Column="0"
                                                   Width="12" Height="12" Margin="12,0"
                                                   Fill="{Binding Node.Bookmark, Converter={x:Static c:BookmarkConverters.ToBrush}}"
@@ -296,7 +297,7 @@
                                         </StackPanel>
                                         <TextBlock HorizontalAlignment="Stretch"
                                                    TextWrapping="Wrap"
-                                                   FontSize="{Binding Source={x:Static vm:Preference.Instance}, Path=DefaultFontSize, Converter={x:Static c:FontSizeModifyConverters.Decrease}}"
+                                                   FontSize="{Binding Source={x:Static configs:Preference.Instance}, Path=DefaultFontSize, Converter={x:Static c:FontSizeModifyConverters.Decrease}}"
                                                    FontStyle="Italic"
                                                    Text="{Binding ProgressDescription}" />
                                         <ProgressBar Margin="0,8,0,0"

@@ -46,7 +46,7 @@ class Linux : OS.IBackend
     {
         if (!File.Exists("/usr/bin/xdg-open"))
         {
-            App.RaiseException("", "You should install xdg-open first!");
+            App123.RaiseException("", "You should install xdg-open first!");
             return;
         }
 
@@ -57,7 +57,7 @@ class Linux : OS.IBackend
     {
         if (!File.Exists("/usr/bin/xdg-open"))
         {
-            App.RaiseException("", "You should install xdg-open first!");
+            App123.RaiseException("", "You should install xdg-open first!");
             return;
         }
 
@@ -92,7 +92,7 @@ class Linux : OS.IBackend
         }
         else
         {
-            App.RaiseException("", "Only supports gnome-terminal/konsole/xfce4-terminal!");
+            App123.RaiseException("", "Only supports gnome-terminal/konsole/xfce4-terminal!");
         }
     }
 
@@ -100,7 +100,7 @@ class Linux : OS.IBackend
     {
         if (!File.Exists("/usr/bin/xdg-open"))
         {
-            App.RaiseException("", "You should install xdg-open first!");
+            App123.RaiseException("", "You should install xdg-open first!");
             return;
         }
 
@@ -109,7 +109,7 @@ class Linux : OS.IBackend
 
         if (proc.ExitCode != 0)
         {
-            App.RaiseException("", $"Failed to open \"{file}\"");
+            App123.RaiseException("", $"Failed to open \"{file}\"");
         }
 
         proc.Close();
