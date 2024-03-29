@@ -20,6 +20,12 @@ namespace GitSpaces;
 
 public class App : AppBase
 {
+    public App()
+    {
+        Global.App = this;
+        Name = nameof(GitSpaces);
+    }
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
