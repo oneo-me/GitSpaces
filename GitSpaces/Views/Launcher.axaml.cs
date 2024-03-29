@@ -1,0 +1,354 @@
+using System;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Interactivity;
+using GitSpaces.Models;
+using GitSpaces.ViewModels;
+
+namespace GitSpaces.Views;
+
+public class LauncherTab : Grid
+{
+    public static readonly StyledProperty<bool> UseFixedTabWidthProperty =
+        AvaloniaProperty.Register<LauncherTab, bool>(nameof(UseFixedTabWidth));
+
+    public bool UseFixedTabWidth
+    {
+        get => GetValue(UseFixedTabWidthProperty);
+        set => SetValue(UseFixedTabWidthProperty, value);
+    }
+
+    protected override Type StyleKeyOverride => typeof(Grid);
+
+    static LauncherTab()
+    {
+        UseFixedTabWidthProperty.Changed.AddClassHandler<LauncherTab>((tab, ev) =>
+        {
+            tab.Width = tab.UseFixedTabWidth ? 200.0 : double.NaN;
+        });
+    }
+}
+
+public class LauncherBody : Border
+{
+    public static readonly StyledProperty<object> DataProperty =
+        AvaloniaProperty.Register<LauncherBody, object>(nameof(Data), false);
+
+    public object Data
+    {
+        get => GetValue(DataProperty);
+        set => SetValue(DataProperty, value);
+    }
+
+    protected override Type StyleKeyOverride => typeof(Border);
+
+    static LauncherBody()
+    {
+        DataProperty.Changed.AddClassHandler<LauncherBody>((body, ev) =>
+        {
+            var data = body.Data;
+
+            if (data == null)
+            {
+                body.Child = null;
+            }
+            else if (data is ViewModels.Welcome)
+            {
+                body.Child = new Welcome
+                {
+                    DataContext = data
+                };
+            }
+            else if (data is ViewModels.Repository)
+            {
+                body.Child = new Repository
+                {
+                    DataContext = data
+                };
+            }
+            else
+            {
+                body.Child = null;
+            }
+        });
+    }
+}
+
+public partial class Launcher : Window, INotificationReceiver
+{
+    public Launcher()
+    {
+        DataContext = new ViewModels.Launcher();
+        InitializeComponent();
+    }
+
+    public void OnReceiveNotification(string ctx, Notification notice)
+    {
+        if (DataContext is ViewModels.Launcher vm)
+        {
+            foreach (var page in vm.Pages)
+            {
+                var pageId = page.Node.Id.Replace("\\", "/");
+                if (pageId == ctx)
+                {
+                    page.Notifications.Add(notice);
+                    return;
+                }
+            }
+
+            if (vm.ActivePage != null) vm.ActivePage.Notifications.Add(notice);
+        }
+    }
+
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        var vm = DataContext as ViewModels.Launcher;
+        if (e.KeyModifiers.HasFlag(KeyModifiers.Control))
+        {
+            if (e.Key == Key.W)
+            {
+                vm.CloseTab(null);
+                e.Handled = true;
+                return;
+            }
+
+            if (e.Key == Key.Tab)
+            {
+                vm.GotoNextTab();
+                e.Handled = true;
+                return;
+            }
+
+            if (vm.ActivePage.Data is ViewModels.Repository repo)
+            {
+                if (e.Key == Key.D1 || e.Key == Key.NumPad1)
+                {
+                    repo.SelectedViewIndex = 0;
+                    e.Handled = true;
+                    return;
+                }
+
+                if (e.Key == Key.D2 || e.Key == Key.NumPad2)
+                {
+                    repo.SelectedViewIndex = 1;
+                    e.Handled = true;
+                    return;
+                }
+
+                if (e.Key == Key.D3 || e.Key == Key.NumPad3)
+                {
+                    repo.SelectedViewIndex = 2;
+                    e.Handled = true;
+                    return;
+                }
+
+                if (e.Key == Key.F)
+                {
+                    repo.IsSearching = !repo.IsSearching;
+                    e.Handled = true;
+                    return;
+                }
+            }
+        }
+        else if (e.Key == Key.Escape)
+        {
+            vm.ActivePage.CancelPopup();
+            e.Handled = true;
+            return;
+        }
+
+        base.OnKeyDown(e);
+    }
+
+    protected override void OnClosing(WindowClosingEventArgs e)
+    {
+        var vm = DataContext as ViewModels.Launcher;
+        vm.Quit();
+
+        base.OnClosing(e);
+    }
+
+    void MaximizeOrRestoreWindow(object sender, TappedEventArgs e)
+    {
+        if (WindowState == WindowState.Maximized)
+        {
+            WindowState = WindowState.Normal;
+        }
+        else
+        {
+            WindowState = WindowState.Maximized;
+        }
+
+        e.Handled = true;
+    }
+
+    void CustomResizeWindow(object sender, PointerPressedEventArgs e)
+    {
+        if (sender is Border border)
+        {
+            if (border.Tag is WindowEdge edge)
+            {
+                BeginResizeDrag(edge, e);
+            }
+        }
+    }
+
+    void BeginMoveWindow(object sender, PointerPressedEventArgs e)
+    {
+        BeginMoveDrag(e);
+    }
+
+    void ScrollTabs(object sender, PointerWheelEventArgs e)
+    {
+        if (!e.KeyModifiers.HasFlag(KeyModifiers.Shift))
+        {
+            if (e.Delta.Y < 0) launcherTabsScroller.LineRight();
+            else launcherTabsScroller.LineLeft();
+            e.Handled = true;
+        }
+    }
+
+    void ScrollTabsLeft(object sender, RoutedEventArgs e)
+    {
+        launcherTabsScroller.LineLeft();
+        e.Handled = true;
+    }
+
+    void ScrollTabsRight(object sender, RoutedEventArgs e)
+    {
+        launcherTabsScroller.LineRight();
+        e.Handled = true;
+    }
+
+    void UpdateScrollIndicator(object sender, SizeChangedEventArgs e)
+    {
+        if (launcherTabsBar.Bounds.Width > launcherTabsContainer.Bounds.Width)
+        {
+            leftScrollIndicator.IsVisible = true;
+            rightScrollIndicator.IsVisible = true;
+        }
+        else
+        {
+            leftScrollIndicator.IsVisible = false;
+            rightScrollIndicator.IsVisible = false;
+        }
+
+        e.Handled = true;
+    }
+
+    void SetupDragAndDrop(object sender, RoutedEventArgs e)
+    {
+        if (sender is Border border)
+        {
+            DragDrop.SetAllowDrop(border, true);
+            border.AddHandler(DragDrop.DropEvent, DropTab);
+        }
+
+        e.Handled = true;
+    }
+
+    void OnPointerPressedTab(object sender, PointerPressedEventArgs e)
+    {
+        _pressedTab = true;
+        _startDrag = false;
+        _pressedTabPosition = e.GetPosition(sender as Border);
+    }
+
+    void OnPointerReleasedTab(object sender, PointerReleasedEventArgs e)
+    {
+        _pressedTab = false;
+        _startDrag = false;
+    }
+
+    void OnPointerMovedOverTab(object sender, PointerEventArgs e)
+    {
+        if (_pressedTab && !_startDrag && sender is Border border)
+        {
+            var delta = e.GetPosition(border) - _pressedTabPosition;
+            var sizeSquired = delta.X * delta.X + delta.Y * delta.Y;
+            if (sizeSquired < 64) return;
+
+            _startDrag = true;
+
+            var data = new DataObject();
+            data.Set("MovedTab", border.DataContext);
+            DragDrop.DoDragDrop(e, data, DragDropEffects.Move);
+        }
+
+        e.Handled = true;
+    }
+
+    void DropTab(object sender, DragEventArgs e)
+    {
+        if (e.Data.Contains("MovedTab") && sender is Border border)
+        {
+            var to = border.DataContext as LauncherPage;
+            var moved = e.Data.Get("MovedTab") as LauncherPage;
+            if (to != null && moved != null && to != moved && DataContext is ViewModels.Launcher vm)
+            {
+                vm.MoveTab(moved, to);
+            }
+        }
+
+        _pressedTab = false;
+        _startDrag = false;
+        e.Handled = true;
+    }
+
+    void OnPopupSure(object sender, RoutedEventArgs e)
+    {
+        if (DataContext is ViewModels.Launcher vm)
+        {
+            vm.ActivePage.ProcessPopup();
+        }
+
+        e.Handled = true;
+    }
+
+    void OnPopupCancel(object sender, RoutedEventArgs e)
+    {
+        if (DataContext is ViewModels.Launcher vm)
+        {
+            vm.ActivePage.CancelPopup();
+        }
+
+        e.Handled = true;
+    }
+
+    void OnPopupCancelByClickMask(object sender, PointerPressedEventArgs e)
+    {
+        OnPopupCancel(sender, e);
+    }
+
+    async void OpenPreference(object sender, RoutedEventArgs e)
+    {
+        var dialog = new Preference();
+        await dialog.ShowDialog(this);
+        e.Handled = true;
+    }
+
+    async void OpenHotkeys(object sender, RoutedEventArgs e)
+    {
+        var dialog = new Hotkeys();
+        await dialog.ShowDialog(this);
+        e.Handled = true;
+    }
+
+    void Check4Update(object sender, RoutedEventArgs e)
+    {
+        App.Check4Update(true);
+        e.Handled = true;
+    }
+
+    async void OpenAboutDialog(object sender, RoutedEventArgs e)
+    {
+        var dialog = new About();
+        await dialog.ShowDialog(this);
+        e.Handled = true;
+    }
+
+    bool _pressedTab;
+    Point _pressedTabPosition;
+    bool _startDrag;
+}
