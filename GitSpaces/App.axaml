@@ -16,8 +16,7 @@
         <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
         <StyleInclude Source="/Resources/Styles.axaml" />
         <!-- OpenUI -->
-        <StyleInclude Source="avares://OpenUI/Themes/Controls.axaml" />
-        <BaseTheme />
+        <OpenTheme />
         <StyleInclude Source="Styles.axaml" />
     </Application.Styles>
 </Application>

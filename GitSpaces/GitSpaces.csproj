@@ -11,8 +11,7 @@
         <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.0.6" />
         <PackageReference Include="AvaloniaEdit.TextMate" Version="11.0.6" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-        <PackageReference Include="OpenUI.Desktop" Version="2.0.0.23" />
-        <PackageReference Include="OpenUI.Themes.Base" Version="2.0.0.23" />
+        <PackageReference Include="OpenUI.Desktop" Version="2.0.0.28" />
         <PackageReference Include="TextMateSharp.Grammars" Version="1.0.56" />
     </ItemGroup>
     <ItemGroup>
