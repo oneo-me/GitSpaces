@@ -7,6 +7,7 @@ using GitSpaces.Commands;
 using GitSpaces.Models;
 using GitSpaces.Services;
 using GitSpaces.ViewModels;
+using OpenUI.Desktop;
 using OpenUI.Services;
 
 namespace GitSpaces.Configs;
@@ -21,11 +22,8 @@ public class Preference : ObservableObject
             if (_instance == null)
             {
                 if (!File.Exists(_savePath))
-                {
                     _instance = new();
-                }
                 else
-                {
                     try
                     {
                         _instance = JsonSerializer.Deserialize(File.ReadAllText(_savePath), JsonCodeGen.Default.Preference);
@@ -34,20 +32,15 @@ public class Preference : ObservableObject
                     {
                         _instance = new();
                     }
-                }
             }
 
             _instance.Repositories.RemoveAll(x => !Directory.Exists(x.FullPath));
 
             if (_instance.DefaultFont == null)
-            {
                 _instance.DefaultFont = FontManager.Current.DefaultFontFamily;
-            }
 
             if (_instance.MonospaceFont == null)
-            {
                 _instance.MonospaceFont = new("fonts:GitSpaces#JetBrains Mono");
-            }
 
             if (!_instance.IsGitConfigured)
             {
@@ -63,9 +56,7 @@ public class Preference : ObservableObject
         set
         {
             if (SetProperty(ref _locale, value))
-            {
                 App123.SetLocale(value);
-            }
         }
     }
 
@@ -75,9 +66,7 @@ public class Preference : ObservableObject
         set
         {
             if (SetProperty(ref _theme, value))
-            {
                 App123.SetTheme(value);
-            }
         }
     }
 
@@ -266,18 +255,14 @@ public class Preference : ObservableObject
         list.Sort((l, r) =>
         {
             if (l.IsRepository != r.IsRepository)
-            {
                 return l.IsRepository ? 1 : -1;
-            }
 
             return l.Name.CompareTo(r.Name);
         });
 
         collection.Clear();
         foreach (var one in list)
-        {
             collection.Add(one);
-        }
     }
 
     public static RepositoryNode FindNode(string id)
@@ -302,9 +287,8 @@ public class Preference : ObservableObject
     public static Repository FindRepository(string path)
     {
         foreach (var repo in _instance.Repositories)
-        {
-            if (repo.FullPath == path) return repo;
-        }
+            if (repo.FullPath == path)
+                return repo;
 
         return null;
     }
@@ -359,9 +343,8 @@ public class Preference : ObservableObject
         }
 
         foreach (var one in collection)
-        {
-            if (RemoveNodeRecursive(node, one.SubNodes)) return true;
-        }
+            if (RemoveNodeRecursive(node, one.SubNodes))
+                return true;
 
         return false;
     }
@@ -369,8 +352,8 @@ public class Preference : ObservableObject
     static Preference _instance;
 
     static readonly string _savePath = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-        "GitSpaces",
+        DesktopApp.Folder,
+        "OldConfigs",
         "preference.json");
 
     string _locale = "en_US";

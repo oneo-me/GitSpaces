@@ -36,7 +36,7 @@ public class App : AppBase
         return new MainWindow_Model();
     }
 
-    public override void OnFrameworkInitializationCompleted()
+    protected override void InitializeApp()
     {
         if (OperatingSystem.IsWindows())
             Service.Add<ISystemService>(new WindowSystemService());
@@ -49,8 +49,6 @@ public class App : AppBase
 
         Service.Add(new ConfigService());
         Service.Add(new UpdateService());
-
-        base.OnFrameworkInitializationCompleted();
     }
 }
 
